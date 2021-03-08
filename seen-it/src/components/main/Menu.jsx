@@ -1,6 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import '../../style/header.css'
-import observer from '../../tools/observer';
 import { Link } from "react-router-dom";
 
 const Menu = () => {

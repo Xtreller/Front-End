@@ -17,14 +17,18 @@ class Header extends Component {
         const loggedState =
             <div id="profile">
                 <span id="username">Hello, {this.state.username}!</span>|
-                <a href="/logout" id="linkMenuLogout">logout</a>
+                <Link to="/logout">logout</Link>
+            </div>
+        const notLoggedState =
+            <div id="profile">
+                <Link to="/">Login</Link>
             </div>
 
         return (
             <header>
 
                 <span className="logo">&#9731;</span><span className="header">SeenIt</span>
-                {this.state.username ? loggedState : null}
+                {this.state.username ? loggedState : notLoggedState}
 
             </header>
         )
