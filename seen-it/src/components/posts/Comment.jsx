@@ -1,18 +1,8 @@
-import { post } from "jquery";
 import React, { Component } from "react";
-import requester from "../../tools/requester";
-import calcTime from '../../tools/calulateTime';
 
 export default class Comments extends Component {
-    constructor(props) {
-        super(props)
-
-    }
-    // getComments() {
-    //     requester.get('appdata', 'comments/?query=' + { 'postId': this.props.postId }, 'kinvey')
-    //         .then(console.log)
-    // }
-
+    
+   
     render() {
         return (
 

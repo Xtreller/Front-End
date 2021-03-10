@@ -11,6 +11,6 @@ export default class Logout extends Component {
     }
     render = () => {
     this.logout()   
-   return <Redirect to='/'/>    
+     return <Redirect to='/'/>    
     }
 }

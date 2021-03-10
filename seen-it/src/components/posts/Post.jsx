@@ -4,12 +4,18 @@ import calcTime from "../../tools/calulateTime";
 
 
 export default class Post extends Component {
-    constructor(props) {
-        super(props)
-    }
+
     showTime() {
         if (this.props._kmd) {
             return calcTime(this.props._kmd.ect)
+        }
+    }
+    showIndex() {
+        if (this.props.index) {
+            return (
+                <div className="col rank">
+                    <span>{this.props.index + 1}</span>
+                </div>)
         }
     }
     showControls() {
@@ -25,25 +31,26 @@ export default class Post extends Component {
             return (
                 <div className="controls">
                     <ul>
-                        <li className="action"><Link to={`/edit/${this.props.match.params.postid}`}>edit</Link></li>
+                        <li className="action"><Link to={{ pathname: `/edit/${this.props.match.params.postid}`, post: { ...this.props } }} > edit</Link></li>
                         <li className="action"><Link to={`/delete/${this.props.match.params.postid}`}>delete</Link></li>
                     </ul>
+                    
+                    {this.props.details}
                 </div>
 
             )
         }
     }
+   
 
     render() {
         return (
             <div className="posts">
                 <article className="post">
-                    <div className="col rank">
-                        <span>{this.props.index + 1}</span>
-                    </div>
+                    {this.showIndex()}
                     <div className="col thumbnail">
-                        <a href="">
-                            <img src='seen-it\src\logo.svg' />
+                        <a href={this.props.url}>
+                            <img src={this.props.image} />
                         </a>
                     </div>
                     <div className="post-content">
@@ -57,8 +64,8 @@ export default class Post extends Component {
                                 {this.showTime()}
                             </div>
                         </div>
-                        {this.showControls()}
                     </div>
+                        {this.showControls()}
 
                 </article>
             </div>

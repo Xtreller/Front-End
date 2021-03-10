@@ -2,7 +2,7 @@ let subscriptions = {
     'loginUser' : []
 };
 
-export default {
+const observer = {
     events:{
         loginUser : 'loginUser'
     },
@@ -14,3 +14,4 @@ export default {
     }
 
 }
+export default observer;

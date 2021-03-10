@@ -45,14 +45,15 @@ export default class Comments extends Component {
         const id = this.props.match.params.postid;
         requester.get('appdata', 'posts', 'kinvey')
             .then(posts => posts.find(post => post._id === id))
-            .then((post) => { this.setState(post) })
+            .then(post => { this.setState(post) })
 
     }
     componentDidMount = () => this.getPost();
     render() {
+        console.log('state.post',this.state.post,'state',this.props.index)
         return (
             <section id="viewComments">
-                <Post match={this.props.match} fromDetails={true} {...this.state.post} />
+                <Post match={this.props.match} {...this.state} />
                 <div class="post post-content">
                     <form id="commentForm" onSubmit={this.handleSubmit}>
                         <label>Comment</label>
