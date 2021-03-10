@@ -11,7 +11,8 @@ export default class Submit extends Component {
             url: null,
             title: null,
             image:null,
-            comment:null
+            details:null,
+            comments:[]
         }
         this.handleChange = this.handleChange.bind(this)
         this.handleSubmit = this.handleSubmit.bind(this)
@@ -23,14 +24,12 @@ export default class Submit extends Component {
     handleChange(e) {
         const fieldName = e.target.name;
         const fieldValue = e.target.value;
-        this.setState({creator:this.state.username,[fieldName]:fieldValue})
+        this.setState({creator:this.state.username,[fieldName]:fieldValue,comments:this.state.comments})
     }
     handleSubmit(e){
         e.preventDefault();
-        console.log(this.state.creator);
         requester.post('appdata','posts','',this.state)
-        .then(console.log('created successfuly'))
-        .catch(console.log);
+        .then(console.log(this.state))
 
     }
     render() {
@@ -48,8 +47,8 @@ export default class Submit extends Component {
                     <input name="title"  type="text" onChange={this.handleChange}/>
                     <label>Link Thumbnail Image (optional):</label>
                     <input name="image"  type="text" onChange={this.handleChange}/>
-                    <label>Comment (optional):</label>
-                    <textarea name="comment" onChange={this.handleChange}></textarea>
+                    <label>Details (optional):</label>
+                    <textarea name="details" onChange={this.handleChange}></textarea>
                     <input id="btnSubmitPost" value="Submit" type="submit"/>
                 </form>
             </div>

@@ -1,8 +1,7 @@
 import Header from './components/main/Header';
-import Comments from './components/posts/Comments';
+import Details from './components/posts/Details';
 import Catalogue from './components/posts/Catalogue';
 import EditForm from './components/posts/EditForm';
-import MyPosts from './components/submit/MyPosts';
 import { BrowserRouter, Route } from "react-router-dom";
 
 import './style/comment.css';
@@ -25,9 +24,8 @@ function App() {
         <div className="content">
           <Menu />
           <Route path='/catalog' exact component={Catalogue} />
-          <Route path='/comments/:postid' component={Comments} />
-          <Route path='/edit' component={EditForm} />
-          <Route path='/myposts' component={MyPosts} />
+          <Route path='/details/:postid' component={Details} />
+          <Route path='/edit/:postid' component={EditForm} />
           <Route path='/submit' component={Submit} />
           <Route path='/logout' component={Logout} />
           <Route path='/' exact component={User} />
