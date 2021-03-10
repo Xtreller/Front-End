@@ -25,6 +25,7 @@ class Login extends Component {
                 observer.trigger(observer.events.loginUser,res.username);
                 sessionStorage.setItem('authtoken',res._kmd.authtoken);
             })
+            this.props.history.push('/catalog')
 
     }
     render() {

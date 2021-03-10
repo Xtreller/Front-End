@@ -1,20 +1,24 @@
 import Login from "./Login";
 import Register from "./Register";
 import About from "../main/About";
+import { Component } from "react";
 
-const UserSection = () =>{
+class UserSection extends Component {
+  render() {
+
     return (
-        <section id="viewWelcome">
-          <div className="welcome">
-            <div className="signup">
-              <Login />
-              <Register />
-            </div>
-            <div class="about">
-              <About />
-            </div>
+      <section id="viewWelcome">
+        <div className="welcome">
+          <div className="signup">
+            <Login {...this.props} />
+            <Register />
           </div>
-        </section>
+          <div class="about">
+            <About />
+          </div>
+        </div>
+      </section>
     )
+  }
 }
 export default UserSection

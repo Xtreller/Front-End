@@ -30,6 +30,7 @@ export default class Submit extends Component {
         e.preventDefault();
         requester.post('appdata','posts','',this.state)
         .then(console.log(this.state))
+        this.props.history.push('/catalog')
 
     }
     render() {

@@ -34,7 +34,6 @@ export default class Post extends Component {
                         <li className="action"><Link to={{ pathname: `/edit/${this.props.match.params.postid}`, post: { ...this.props } }} > edit</Link></li>
                         <li className="action"><Link to={`/delete/${this.props.match.params.postid}`}>delete</Link></li>
                     </ul>
-                    
                     {this.props.details}
                 </div>
 

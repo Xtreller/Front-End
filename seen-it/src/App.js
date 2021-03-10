@@ -2,6 +2,7 @@ import Header from './components/main/Header';
 import Details from './components/posts/Details';
 import Catalogue from './components/posts/Catalogue';
 import EditForm from './components/posts/EditForm';
+import DeletePost from './components/posts/DeletePost';
 import { BrowserRouter, Route } from "react-router-dom";
 
 import './style/comment.css';
@@ -26,6 +27,7 @@ function App() {
           <Route path='/catalog' exact component={Catalogue} />
           <Route path='/details/:postid' component={Details} />
           <Route path='/edit/:postid' component={EditForm} />
+          <Route path='/delete/:postid' component={DeletePost} />
           <Route path='/submit' component={Submit} />
           <Route path='/logout' component={Logout} />
           <Route path='/' exact component={User} />

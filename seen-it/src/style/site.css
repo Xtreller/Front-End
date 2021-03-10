@@ -29,7 +29,7 @@ footer {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    padding: 20px;
+    padding: 10px;
 }
 
 .welcome>* {
@@ -41,7 +41,8 @@ footer {
     background: #ddf9c0;
     padding: 20px;
     margin: 10px;
-    height: 340px;
+    height: auto;
+    width: fit-content;
 }
 
 .signup {
