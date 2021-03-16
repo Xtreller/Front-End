@@ -1,0 +1,14 @@
+const mongoose = require('mongoose');
+
+const movieModel = new mongoose.Schema({
+    title: { type: String, required: true, minlength: 2, unique: true },
+    image: { type: String, required: true },
+    genre: { type: String },
+    carouselImages: [String],
+    actors: { type: Array },
+    producers: String,
+    publishDate: Date,
+    rating: { type: Number, min: 1, max: 10 },
+    comments: String,
+});
+module.exports = new mongoose.model('Movie', movieModel);
