@@ -37,7 +37,7 @@ class Login extends Component {
                 if (response.success && response.token) {
                     localStorage.setItem('token', response.token);
                     this.props.setLoggedIn(response.user.name);
-
+                    this.props.history.push('/catalogue');
                 }
             })
             .catch(err => console.log(err))

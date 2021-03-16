@@ -538,6 +538,7 @@ form {
   background-size: cover;
   padding-top: 7%;
   z-index: 1;
+  margin-bottom: 5rem;
   height: auto;
   width: 100%;
 }

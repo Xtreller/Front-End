@@ -1,15 +1,17 @@
 import { Component } from "react";
+import { Link } from 'react-router-dom';
 import Movie from './Movie';
-var temp = [{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' },
-{ title: '7Aces', date: 1615708298074, rating: '7/10' }]
+var temp = [
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' },
+    { title: '7Aces', date: 1615708298074, rating: '7/10' }]
 class Catalogue extends Component {
     constructor(props) {
         super(props)
@@ -30,9 +32,12 @@ class Catalogue extends Component {
     render() {
 
         return (
-            <div className='catalogue'>
-                {/* {this.state.movies.map((m,i)=><div>{m.json} - {i}</div>)} */}
-                {temp.map((movie, i) => <Movie key={i} index={i} data={movie} />)}
+            <div >
+                <span className="active"><Link to="/addMovie">Add Movie</Link></span>
+                <div className="catalogue">
+                    {/* {this.state.movies.map((m,i)=><div>{m.json} - {i}</div>)} */}
+                    {temp.map((movie, i) => <Movie key={i} index={i} data={movie} />)}
+                </div>
             </div>)
     }
 

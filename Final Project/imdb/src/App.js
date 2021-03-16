@@ -4,6 +4,7 @@ import Register from './components/User/Register';
 import Login from './components/User/Login';
 import Welcome from './components/Common/Welcome';
 import Catalogue from './components/Movies/Catalogue';
+import AddMovies from './components/Movies/AddMovies';
 import Nav from './components/Common/Nav';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/register' component={Register} />
         <Route path='/login' component={Login} />
         <Route path='/movies' component={Catalogue} />
+        <Route path='/addMovie' component={AddMovies} />
         <footer >
           <p>
           Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021
