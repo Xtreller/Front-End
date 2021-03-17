@@ -2,6 +2,7 @@ import './App.css';
 import './style.css';
 import Register from './components/User/Register';
 import Login from './components/User/Login';
+import AdminPage from './components/User/AdminPage';
 import Welcome from './components/Common/Welcome';
 import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
@@ -20,6 +21,7 @@ function App() {
         <Route path='/login' component={Login} />
         <Route path='/movies' component={Catalogue} />
         <Route path='/addMovie' component={AddMovies} />
+        <Route path='/users' component={AdminPage} />
         <footer >
           <p>
           Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021

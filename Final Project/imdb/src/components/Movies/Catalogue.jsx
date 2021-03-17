@@ -30,7 +30,7 @@ class Catalogue extends Component {
 
 
     render() {
-
+        console.log(this.state)
         return (
             <div >
                 <span className="active"><Link to="/addMovie">Add Movie</Link></span>

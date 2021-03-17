@@ -1,8 +1,9 @@
 const express = require('express')
 const passport = require('passport')
 const validator = require('validator')
-
+var users = require('../data/users');
 const router = new express.Router()
+const userModel = require('../models/user');
 
 function validateSignupForm (payload) {
   const errors = {}
@@ -63,9 +64,9 @@ function validateLoginForm (payload) {
 }
 
 router.post('/register', (req, res, next) => {
-  console.log(req.body)
+  console.log('register',req.body)
   //todo implement mongo usage
-
+  
   const validationResult = validateSignupForm(req.body)
   if (!validationResult.success) {
     return res.status(200).json({
@@ -83,13 +84,18 @@ router.post('/register', (req, res, next) => {
       })
     }
 
-    return res.status(200).json({
-      success: true,
-      message: 'You have successfully signed up! Now you should be able to log in.'
-    })
+    return users.save(req.body);
   })(req, res, next)
 })
 
+router.get('/users',(req,res,next)=>{
+  let userCollection;
+   userModel.find({})
+  .then(users=>res.json({userCollection:users}))
+  // console.log('auth userCollection ->',userCollection)
+  //  return res.send({userCollection})
+
+})
 router.post('/login', (req, res, next) => {
   console.log(req.body)
   const validationResult = validateLoginForm(req.body)

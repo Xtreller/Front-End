@@ -18,13 +18,4 @@ module.exports = (app) => {
     passport.use('local-signup', localSignupStrategy)
     passport.use('local-login', localLoginStrategy)
 
-    // routes
-    
-    const dbConnectionPromise = require('./database')();
-
-    dbConnectionPromise.then(() => {
-      app.listen(config.port, console.log(`Listening on port ${config.port}! Now its up to you: http://localhost:${config.port}/`));
-    });
-
-
 };

@@ -7,14 +7,15 @@ module.exports = {
   save: (user) => {
 
     userModel.create(user)
-      .then(res => console.log(res))
+      .then(res => res)
       .catch(err => console.log(err))
 
   },
-  all:()=>{
-    userModel.find({})
-    .then(res=>res.json())
-    .catch(console.log)
+  getAll: () => {
+    const users = userModel.find({})
+      .then(res => { return res })
+    return users
+
   },
   findByEmail: (email) => {
     //toDo

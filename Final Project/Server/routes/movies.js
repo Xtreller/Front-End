@@ -22,9 +22,7 @@ router.get('/movies',(req,res,next)=>{
     console.log('geting')
     let moviesColection = (Movies.retriveMovies())
     console.log(moviesColection)
-    return res.status(200).json({
-        moviesColection
-    })
+    return res.status(200).json({moviesColection})
 })
 
 module.exports = router
