@@ -8,28 +8,49 @@ import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
 import Nav from './components/Common/Nav';
 import { BrowserRouter, Route, Link } from "react-router-dom";
+import React, { Component } from 'react';
 
 
-function App() {
-  return (
-    <div id="hero">
-      <BrowserRouter>
+class App extends Component {
+  constructor() {
+    super()
+    this.state = {
 
-        <Nav />
-        <Route path='/' exact component={Welcome} />
-        <Route path='/register' component={Register} />
-        <Route path='/login' component={Login} />
-        <Route path='/movies' component={Catalogue} />
-        <Route path='/addMovie' component={AddMovies} />
-        <Route path='/users' component={AdminPage} />
-        <footer >
-          <p>
-          Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021
+      isLoggedIn: false,
+      userProfile: {}
+    }
+    this.setUserProfile = this.setUserProfile.bind(this);
+
+  }
+  setUserProfile(user) {
+
+    this.setState({
+      isLoggedIn: true,
+      userProfile: JSON.parse(user)
+    })
+  }
+  render() {
+    console.log(this.state.userProfile)
+    return (
+      <div id="hero" >
+        <BrowserRouter>
+          <Nav userProfile={this.state.userProfile} isLoggedIn={this.state.isLoggedIn} />
+          <Route path='/' exact component={Welcome} />
+          <Route path='/register' component={Register} />
+          <Route path='/login' render={() => <Login history={this.props.history} setUserProfile={this.setUserProfile} />} />
+          <Route path='/movies' component={Catalogue} />
+          <Route path='/addMovie' component={AddMovies} />
+          <Route path='/users' component={AdminPage} />
+          <footer >
+            <p>
+              Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021
           </p>
-        </footer>
-      </BrowserRouter>
-    </div>
-  );
+          </footer>
+        </BrowserRouter>
+      </div>
+
+    );
+  }
 }
 
 export default App;

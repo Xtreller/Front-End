@@ -89,15 +89,13 @@ router.post('/register', (req, res, next) => {
 })
 
 router.get('/users',(req,res,next)=>{
-  let userCollection;
+ 
    userModel.find({})
   .then(users=>res.json({userCollection:users}))
-  // console.log('auth userCollection ->',userCollection)
-  //  return res.send({userCollection})
 
 })
 router.post('/login', (req, res, next) => {
-  console.log(req.body)
+  console.log('login-body: ',req.body)
   const validationResult = validateLoginForm(req.body)
   if (!validationResult.success) {
     return res.status(200).json({

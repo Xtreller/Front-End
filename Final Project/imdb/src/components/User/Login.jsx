@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
 
 class Login extends Component {
@@ -34,10 +34,11 @@ class Login extends Component {
             })
             .then(data => data.json())
             .then(response => {
+                console.log(response.user)
                 if (response.success && response.token) {
                     localStorage.setItem('token', response.token);
-                    this.props.setLoggedIn(response.user.name);
-                    this.props.history.push('/catalogue');
+                    this.props.setUserProfile(JSON.stringify(response.user));
+                    this.props.history.push('/movies');
                 }
             })
             .catch(err => console.log(err))
@@ -66,4 +67,4 @@ class Login extends Component {
     }
 }
 
-export default Login
+export default withRouter(Login)

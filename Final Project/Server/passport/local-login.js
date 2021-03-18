@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken')
 const usersData = require('../data/users')
+const bcrypt = require('bcrypt');
+const userModel = require('../models/user')
 const PassportLocalStrategy = require('passport-local').Strategy
 
 module.exports = new PassportLocalStrategy({
@@ -8,38 +10,40 @@ module.exports = new PassportLocalStrategy({
   session: false,
   passReqToCallback: true
 }, (req, email, password, done) => {
-  const user = {
+  var user = {
     email: email.trim(),
     password: password.trim()
   }
 
-  let savedUser = usersData.findByEmail(email)
+  userModel.findOne({ email: user.email }).lean().then(res => res)
+    .then(foundUser => {
 
-  if (!savedUser) {
-    const error = new Error('Incorrect email or password')
-    error.name = 'IncorrectCredentialsError'
+      if (!foundUser) {
+        const error = new Error('Incorrect email or password')
+        error.name = 'IncorrectCredentialsError'
 
-    return done(error)
-  }
+        return done(error)
+      }
 
-  const isMatch = savedUser.password === user.password
+      bcrypt.compare(password, foundUser.password)
+        .then(isMatch => {
+          if (!isMatch) {
+            const error = new Error('Incorrect email or password')
+            error.name = 'IncorrectCredentialsError'
 
-  if (!isMatch) {
-    const error = new Error('Incorrect email or password')
-    error.name = 'IncorrectCredentialsError'
+            return done(error)
+          }
+        });
 
-    return done(error)
-  }
 
-  const payload = {
-    sub: savedUser.id
-  }
 
-  // create a token string
-  const token = jwt.sign(payload, 's0m3 r4nd0m str1ng')
-  const data = {
-    name: savedUser.name
-  }
+      const payload = {
+        sub: foundUser._id
+      }
 
-  return done(null, token, data)
+      // create a token string
+      const token = jwt.sign(payload, 's0m3 r4nd0m str1ng')
+
+      return done(null, token, foundUser)
+    })
 })
