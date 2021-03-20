@@ -7,23 +7,19 @@ const movieModel = require('../models/movie');
 
 module.exports = {
     addMovie: (data) => {
-            console.log({...data})
-        movieModel.create({...data})
-        .then(res=>console.log(res))
-        .then(console.log('Movie added successfuly!'))
-        .catch(err=>console.log(err))
+        console.log({ ...data })
+        movieModel.create({ ...data })
+            .then(res => console.log(res))
+            .then(console.log('Movie added successfuly!'))
+            .catch(err => console.log(err))
     },
-    findMovie:(movieId)=>{
+    findMovie: (movieId) => {
         // ToDo
         return movieId
     },
     retriveMovies: () => {
         console.log('movie collection: \n')
-        movieModel.find({})
-        .then(movies => {
-            console.log(movies.map(m=>console.log(m.title)));
-            return movies})
-        .catch(err=>console.log(err))
+        return;
     },
     cleanMoviesCollection: () => {
         let movies = []

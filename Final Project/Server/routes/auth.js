@@ -1,132 +1,95 @@
 const express = require('express')
-const passport = require('passport')
-const validator = require('validator')
+const bcrypt =  require('bcrypt')
 var users = require('../data/users');
-const router = new express.Router()
+const jwt = require('jsonwebtoken')
 const userModel = require('../models/user');
+const config = require('../config/config')
+const router = new express.Router()
 
-function validateSignupForm (payload) {
-  const errors = {}
-  let isFormValid = true
-  let message = ''
 
-  if (!payload || typeof payload.email !== 'string' || !validator.isEmail(payload.email)) {
-    isFormValid = false
-    errors.email = 'Please provide a correct email address.' + payload.email;
-  }
 
-  if (!payload || typeof payload.password !== 'string' || payload.password.trim().length <8) {
-    isFormValid = false
-    errors.password = 'Password must have at least 8 characters.' + payload.password
-  }
 
-  if (!payload || typeof payload.name !== 'string' || payload.name.trim().length === 0) {
-    isFormValid = false
-    errors.name = 'Please provide your name.' + payload.name;
-  }
-
-  if (!isFormValid) {
-    message = 'Check the form for errors.'
-  }
-
-  return {
-    success: isFormValid,
-    message,
-    errors
-  }
-}
-
-function validateLoginForm (payload) {
-  const errors = {}
-  let isFormValid = true
-  let message = ''
-
-  if (!payload || typeof payload.email !== 'string' || payload.email.trim().length === 0) {
-    isFormValid = false
-    
-    errors.email = 'Please provide your email address.' + payload.email;
-  }
-
-  if (!payload || typeof payload.password !== 'string' || payload.password.trim().length === 0) {
-    isFormValid = false
-    errors.password = 'Please provide your password.'
-  }
-
-  if (!isFormValid) {
-    message = 'Check the form for errors.'
-  }
-
-  return {
-    success: isFormValid,
-    message,
-    errors
-  }
-}
 
 router.post('/register', (req, res, next) => {
-  console.log('register',req.body)
-  //todo implement mongo usage
-  
-  const validationResult = validateSignupForm(req.body)
-  if (!validationResult.success) {
-    return res.status(200).json({
+  const { name, email, password } = req.body;
+
+
+  let result;
+  if (name.length < 3) {
+    result = {
       success: false,
-      message: validationResult.message,
-      errors: validationResult.errors
-    })
+      message: "Name must be at least 3 charackters!",
+      errors: 'Check if form is valid'
+    };
+  }
+  if (password.length < 8) {
+    result = {
+      success: false,
+      message: "Password must be at least 8 symbols long1",
+      errors: 'Check if form is valid'
+    };
   }
 
-  return passport.authenticate('local-signup', (err) => {
-    if (err) {
-      return res.status(200).json({
-        success: false,
-        message: err
-      })
-    }
+  userModel.exists({ email: email })
+    .then(exists => {
+      if (exists) {
+        result = {
+          success: false,
+          message: 'Email already exists',
+          errors: 'Check if form is valid'
+        };
+      }
+      if (!err) {
+        users.save(req.body);
+        return result = {
+          success: true,
+          message: 'You have successfuly registered!',
+        };
+      }
 
-    return users.save(req.body);
-  })(req, res, next)
+    })
+  return res.json(result);
 })
 
-router.get('/users',(req,res,next)=>{
- 
-   userModel.find({})
-  .then(users=>res.json({userCollection:users}))
+router.get('/users', (req, res, next) => {
+
+  userModel.find({})
+    .then(users => res.json({ userCollection: users }))
 
 })
 router.post('/login', (req, res, next) => {
-  console.log('login-body: ',req.body)
-  const validationResult = validateLoginForm(req.body)
-  if (!validationResult.success) {
-    return res.status(200).json({
-      success: false,
-      message: validationResult.message,
-      errors: validationResult.errors
-    })
-  }
 
-  return passport.authenticate('local-login', (err, token, userData) => {
-    if (err) {
-      if (err.name === 'IncorrectCredentialsError') {
-        return res.status(200).json({
+  let result;
+  const { email, password } = req.body;
+  userModel.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        return result = {
           success: false,
-          message: err.message
-        })
+          message: 'User not found'
+        }
       }
-
-      return res.status(200).json({
-        success: false,
-        message: 'Could not process the form.'
-      })
-    }
-
-    return res.json({
-      success: true,
-      message: 'You have successfully logged in!',
-      token,
-      user: userData
-    })
-  })(req, res, next)
+      else {
+        bcrypt.compare(password, user.password)
+          .then(match => {
+            if (!match) {
+              return result = {
+                success:false,
+                message:"Invalid Username or Password!"
+              }
+            }
+            const token = jwt.sign({ id: user._id }, config.jwtSecret);
+            result={
+              success:true,
+              message:"You have successfuly logged in!"
+            }
+            console.log(result)
+            res.cookie(config.authCookie, token)
+            res.status(200).json({result,token,user});
+            });
+      }
+    }).catch(err=>console.log(err));
 })
+
 
 module.exports = router

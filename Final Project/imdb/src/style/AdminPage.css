@@ -1,43 +1,9 @@
 .userList {
     counter-reset: index;
     padding: 0;
-    width: 1000px;
+    width: 80%;
+    margin: 3rem auto 5rem;
 }
-
-/* List element */
-
-/* .userList>li {
-    width: 100%;
-    counter-increment: index;
-    display: flex;
-    flex-direction: row;
-    text-align: center;
-    border: 1px solid red;
-    border-radius: 12px;
-    margin: 10px auto;
-    padding:7px;
-    color: white;
-} */
-
-.userList>li>h3 {
-    margin: 0 auto;
-    padding-right: 40px;
-}
-
-/* Element counter */
-
-/* .userList>li {
-    content: counters(index, ".", decimal-leading-zero);
-    text-align: center;
-    font-weight: bold;
-    min-width: 50px;
-    padding-right: 12px;
-    font-variant-numeric: tabular-nums;
-    align-self: flex-start;
-    color: white;
-} */
-
-/* Element separation */
 
 .userList>li+.userList>li {
     border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -55,24 +21,32 @@
     padding: 7px;
     color: white;
 }
-.userList>*:hover{
+
+.userList>*:hover {
     border-color: #cc1616;
     background-color: #cc1616;
 }
-.userList>*:hover>button:hover{
-   transform: scale(1.1);
-   transition:0.2s;
+
+.userList>*:hover>button:hover {
+    transform: scale(1.1);
+    transition: 0.2s;
 }
-.userList>*:hover>button{
+
+.userList>*:hover>button {
     background-color: black;
     border-color: black;
 }
 
 .userList>li>* {
-    margin: 0px 5px 0px;
-    padding: 5px;
+    margin: 0px 5px;
+    padding: 5px 20px 5px 20px;
+    text-align: center;
     align-self: center;
-    width: 35%;
+    width: 30%;
+}
+
+.userList>li>*:nth-child(1) {
+    padding: 0;
 }
 
 .userList>li>*:nth-child(1) {
@@ -80,24 +54,24 @@
     text-align: center;
     margin: 0 auto;
 }
-.btn-action{
-    font-family: "Raleway", sans-serif; 
+
+.btn-action {
+    font-family: "Raleway", sans-serif;
     text-transform: uppercase;
-    width: fit-content;
+    width: 120px;
     height: auto;
     font-size: 14px;
     display: inline-block;
     margin-right: 5rem;
-    
-    padding: 5px 14px;
+    padding: 0px 5px 0px 5px;
     transition: 0.5s;
-    background:#cc1616;
-  
+    background: #cc1616;
     border: 1px solid #cc1616;
     border-radius: 5%;
     color: #fff;
-  }
-  .btn-action:hover{
+}
+
+.btn-action:hover {
     background: tomato;
     border-color: tomato;
-  }
+}
