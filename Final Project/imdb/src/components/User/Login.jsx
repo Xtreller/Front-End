@@ -53,11 +53,11 @@ class Login extends Component {
                 <h1>Login</h1>
                 <div className="form-group" >
                     <label htmlFor="exampleInputEmail1">Email address</label><br />
-                    <input data-name="email" onChange={this.handleChange} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                    <input data-name="email" onChange={this.handleChange} type="email"  aria-describedby="emailHelp"  />
                 </div>
                 <div className="form-group " >
                     <label htmlFor="exampleInputPassword1">Password</label><br />
-                    <input data-name="password" type="password" onChange={this.handleChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                    <input data-name="password" type="password" onChange={this.handleChange} className="form-control" id="exampleInputPassword1" />
                 </div>
                 <br />
                 <button onClick={this.handleSubmit} type="button" className="btn-submit">Login</button>

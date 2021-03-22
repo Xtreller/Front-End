@@ -1,29 +1,18 @@
 import { Component } from "react";
 import { Link } from 'react-router-dom';
 import Movie from './Movie';
-var temp = [
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' },
-    { title: '7Aces', date: 1615708298074, rating: '7/10' }]
+
 class Catalogue extends Component {
     constructor(props) {
         super(props)
         this.state = {
             movies: []
         }
-        // var temp = this.setState({ movies: res });
     }
     getMovies() {
         fetch('http://localhost:5000/catalogue/movies')
             .then(data => data.json())
-            .then(res => this.setState({ movies: res.moviesColection }))
+            .then(res => this.setState({ movies: res.moviesCollection }))
             .catch(err => console.log(err))
     }
     componentDidMount = () => this.getMovies();
@@ -33,10 +22,9 @@ class Catalogue extends Component {
         console.log(this.state)
         return (
             <div >
-                <span className="active"><Link to="/addMovie">Add Movie</Link></span>
+                <span className="btn-secondary"><Link to="/addMovie">Add Movie</Link></span>
                 <div className="catalogue">
-                    {/* {this.state.movies.map((m,i)=><div>{m.json} - {i}</div>)} */}
-                    {temp.map((movie, i) => <Movie key={i} index={i} data={movie} />)}
+                    {this.state.movies.map((movie,i)=><Movie key={i} index={i} movie={movie} />)}
                 </div>
             </div>)
     }

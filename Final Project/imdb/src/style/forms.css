@@ -1,0 +1,58 @@
+form {
+    /* background: url("../img/hero-bg.jpg") top center ; */
+    filter: opacity(100);
+    background-size: cover;
+    padding-top: 7%;
+    z-index: 1;
+    margin-bottom: 5rem;
+    height: auto;
+    width: 100%;
+}
+
+form label {
+    color: white;
+}
+
+input {
+    margin: 0.5rem;
+    resize: horizontal;
+    width: 200px;
+    height: 30px;
+    background-color: rgba(255, 255, 255, 0);
+    color: #fff;
+    border: 0;
+    border-bottom: 2px solid red;
+    border-radius: 0.4rem 0.4rem;
+}
+
+label {
+    margin-bottom: 3rem;
+}
+
+input:focus {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-bottom: 4px solid red;
+}
+
+textarea {
+    min-width: 200px;
+    min-height: 30px;
+    height: 100%;
+    max-width: 200px;
+    max-height: 50px;
+    background-color: rgba(255, 255, 255, 0);
+    color: #fff;
+    border: 0;
+    border-bottom: 2px solid red;
+    border-radius: 0.4rem 0.4rem;
+}
+textarea:focus{
+    background-color: rgba(255, 255, 255, 0.4);
+
+}
+#description {
+    max-height: 500px;
+    max-width: 500px;
+    min-width: 200px;
+    min-height: 30px;
+}

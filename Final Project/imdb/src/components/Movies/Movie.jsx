@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 class Movie extends Component {
     constructor(props) {
@@ -8,26 +8,25 @@ class Movie extends Component {
             movie: {}
         }
     }
-    getMovie() {
-        this.setState({ movie: this.props.data })
-        console.log(this.state.movie);
-    }
+    
     render() {
         return (
-            <div class="flip-card">
-                <div class="flip-card-inner">
-                    <div class="flip-card-front">
-                        <img src="https://p7.hiclipart.com/preview/637/987/686/movie-camera-photographic-film-cinema-clapperboard-others.jpg"  />
-                        <h5>{this.props.data.title}</h5>
-                        <p>{this.props.data.rating}</p>
-
+            <div className="flip-card">
+                <div className="flip-card-inner">
+                    <div className="flip-card-front">
+                        <img
+                            src={this.props.movie.image}
+                            alt="Loading..." />
+                        <h5>{this.props.movie.title}</h5>
+                        <p>{this.props.movie.rating}</p>
+                        <button id="card-btn"><Link  to={{pathname: `/Details/${this.props.movie._id}`}} >Details</Link></button>
                     </div>
-                    <div class="flip-card-back">
-                        <h1>{this.props.data.title}</h1>
-                        <p>{this.props.data.rating}</p>
+                    {/* <div className="flip-card-back">
+                        <h1>{this.props.movie.title}</h1>
+                        <p>{this.props.movie.rating}</p>
                         <p>We love that movie &#10084;</p>
                         <a href="/movies">Details</a>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         )

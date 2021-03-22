@@ -40,16 +40,16 @@ class Register extends Component {
                 <h1>Register</h1>
                 <div className="form-group" >
                     <label htmlFor="Name">Name</label><br />
-                    <input data-name="name" type="text" onChange={this.handleChange} className="form-control" id="Name" placeholder="Name" />
+                    <input data-name="name" type="text" onChange={this.handleChange} className="form-control" id="Name"  />
                 </div>
                 <div className="form-group " >
                     <label htmlFor="exampleInputEmail1">Email</label><br />
-                    <input data-name="email" onChange={this.handleChange} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+                    <input data-name="email" onChange={this.handleChange} type="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
                 </div>
                 
                 <div className="form-group" >
                     <label htmlFor="exampleInputPassword1">Password</label><br />
-                    <input data-name="password" type="password" onChange={this.handleChange} className="form-control" id="exampleInputPassword1" placeholder="Password" />
+                    <input data-name="password" type="password" onChange={this.handleChange} className="form-control" id="exampleInputPassword1"  />
                 </div>
 
                 <br />

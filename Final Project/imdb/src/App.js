@@ -1,5 +1,6 @@
 import './App.css';
-import './style.css';
+import './style/index.css';
+import './style/forms.css';
 import Register from './components/User/Register';
 import Login from './components/User/Login';
 import AdminPage from './components/User/AdminPage';
