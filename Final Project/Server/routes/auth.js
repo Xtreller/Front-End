@@ -1,5 +1,5 @@
 const express = require('express')
-const bcrypt =  require('bcrypt')
+const bcrypt = require('bcrypt')
 var users = require('../data/users');
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user');
@@ -74,22 +74,41 @@ router.post('/login', (req, res, next) => {
           .then(match => {
             if (!match) {
               return result = {
-                success:false,
-                message:"Invalid Username or Password!"
+                success: false,
+                message: "Invalid Username or Password!"
               }
             }
             const token = jwt.sign({ id: user._id }, config.jwtSecret);
-            result={
-              success:true,
-              message:"You have successfuly logged in!"
+            result = {
+              success: true,
+              message: "You have successfuly logged in!"
             }
             console.log(result)
             res.cookie(config.authCookie, token)
-            res.status(200).json({result,token,user});
-            });
+            res.status(200).json({ result, token, user });
+          });
       }
-    }).catch(err=>console.log(err));
+    }).catch(err => console.log(err));
 })
+router.get('/block/:userid', (req, res, next) => {
 
-
+  const users = () => userModel.find({})
+    .then(users => res.json({ userCollection: users }))
+  console.log('fetch')
+  userModel.findOne({ _id: req.params.userid })
+    .then(user => {
+      const { name,banned } = user
+      console.log(name,banned);
+      if (user.banned) {
+        user.banned = false;
+        user.save();
+        return  users
+      }
+      else{
+        user.banned = true;
+        user.save();
+        return  users
+      }
+    })
+})
 module.exports = router
