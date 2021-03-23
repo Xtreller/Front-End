@@ -22,7 +22,6 @@
     padding: 7px;
     color: white;
 }
-
 .userList>*:hover {
     border-color: #cc1616;
     background-color: #cc1616;
@@ -58,14 +57,14 @@
 
 .btn-action {
     font-family: "Raleway", sans-serif;
-    text-transform: uppercase;
-    width: 120px;
-    height: auto;
+    text-transform:capitalize;
+    width: 40px;
+    height: 40px;
     font-size: 14px;
-    display: inline-block;
-    margin-right: 5rem;
-    padding: 0px 5px 0px 5px;
-    transition: 0.5s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
     background: #cc1616;
     border: 1px solid #cc1616;
     border-radius: 5%;
@@ -73,6 +72,7 @@
 }
 
 .btn-action:hover {
+    transition: 0.5s;
     background: tomato;
     border-color: tomato;
 }

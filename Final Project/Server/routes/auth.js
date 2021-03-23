@@ -92,22 +92,38 @@ router.post('/login', (req, res, next) => {
 })
 router.get('/block/:userid', (req, res, next) => {
 
-  const users = () => userModel.find({})
+  const returnUsers = () => userModel.find({})
     .then(users => res.json({ userCollection: users }))
   console.log('fetch')
   userModel.findOne({ _id: req.params.userid })
     .then(user => {
-      const { name,banned } = user
-      console.log(name,banned);
-      if (user.banned) {
-        user.banned = false;
-        user.save();
-        return  users
+      const { name, banned } = user
+      console.log(name, banned);
+      if (banned) {
+        userModel.updateOne({ _id: req.params.userid }, { banned: false })
+          .then(returnUsers)
       }
-      else{
-        user.banned = true;
-        user.save();
-        return  users
+      else {
+        userModel.updateOne({ _id: req.params.userid }, { banned: true })
+          .then(returnUsers)
+      }
+    })
+})
+router.get('/makeAdmin/:userid', (req, res, next) => {
+  const returnUsers = () => userModel.find({})
+    .then(users => res.json({ userCollection: users }))
+
+  userModel.findOne({ _id: req.params.userid })
+    .then(user => {
+      const { name, role } = user;
+      
+      if (role === 'user') {
+        userModel.updateOne({ _id: req.params.userid }, { role: 'admin' })
+          .then(returnUsers)
+      }
+      else {
+        userModel.updateOne({ _id: req.params.userid }, { role: 'user' })
+          .then(returnUsers)
       }
     })
 })
