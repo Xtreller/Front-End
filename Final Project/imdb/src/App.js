@@ -42,7 +42,7 @@ class App extends Component {
     return (
       <div id="hero" >
         <BrowserRouter>
-        <Nav data={this.state} />
+        <Nav data={this.state}/>
           <Route path='/' exact component={Welcome} />
           <Route path='/register' component={Register} />
           <Route path='/login' render={() => <Login history={this.props.history} />} />
