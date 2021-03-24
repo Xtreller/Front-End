@@ -4,11 +4,9 @@ var users = require('../data/users');
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user');
 const config = require('../config/config')
+const verifyJwt = require('../middleware/auth-check');
+
 const router = new express.Router()
-
-
-
-
 
 router.post('/register', (req, res, next) => {
   const { name, email, password } = req.body;
@@ -51,7 +49,7 @@ router.post('/register', (req, res, next) => {
   return res.json(result);
 })
 
-router.get('/users', (req, res, next) => {
+router.get('/users', verifyJwt, (req, res, next) => {
 
   userModel.find({})
     .then(users => res.json({ userCollection: users }))
@@ -81,33 +79,36 @@ router.post('/login', (req, res, next) => {
             const token = jwt.sign({ id: user._id }, config.jwtSecret);
             result = {
               success: true,
-              message: "You have successfuly logged in!"
+              message: "You have successfuly logged in! " + new Date().toLocaleString()
             }
-            console.log(result)
+            console.log(result.message)
             res.cookie(config.authCookie, token)
             res.status(200).json({ result, token, user });
           });
       }
     }).catch(err => console.log(err));
 })
+router.get('/isAuth',verifyJwt,(req,res)=>{
+    res.json('Authentication Successful!');
+})
+
 router.get('/block/:userid', (req, res, next) => {
 
   const returnUsers = () => userModel.find({})
-    .then(users => res.json({ userCollection: users }))
-  console.log('fetch')
-  userModel.findOne({ _id: req.params.userid })
-    .then(user => {
-      const { name, banned } = user
-      console.log(name, banned);
-      if (banned) {
-        userModel.updateOne({ _id: req.params.userid }, { banned: false })
-          .then(returnUsers)
-      }
-      else {
-        userModel.updateOne({ _id: req.params.userid }, { banned: true })
-          .then(returnUsers)
-      }
-    })
+  .then(users => res.json({ userCollection: users }))
+userModel.findOne({ _id: req.params.userid })
+  .then(user => {
+    const { name, banned } = user
+    console.log(name, banned);
+    if (banned) {
+      userModel.updateOne({ _id: req.params.userid }, { banned: false })
+        .then(returnUsers)
+    }
+    else {
+      userModel.updateOne({ _id: req.params.userid }, { banned: true })
+        .then(returnUsers)
+    }
+  })
 })
 router.get('/makeAdmin/:userid', (req, res, next) => {
   const returnUsers = () => userModel.find({})
@@ -116,7 +117,7 @@ router.get('/makeAdmin/:userid', (req, res, next) => {
   userModel.findOne({ _id: req.params.userid })
     .then(user => {
       const { name, role } = user;
-      
+
       if (role === 'user') {
         userModel.updateOne({ _id: req.params.userid }, { role: 'admin' })
           .then(returnUsers)

@@ -1,28 +1,23 @@
 const jwt = require('jsonwebtoken')
-const usersData = require('../data/users')
+const config = require('../config/config')
 
 module.exports = (req, res, next) => {
-  if (!req.headers.authorization) {
-    return res.status(401).end()
+  const token = req.headers["auth-token"];
+  if (!token) {
+   return res.json({ isAuth: false, message: "received token is not valid: " + token })
   }
-
-  // get the last part from a authorization header string like "bearer token-value"
-  const token = req.headers.authorization.split(' ')[1]
-
-  // decode the token using a secret key-phrase
-  return jwt.verify(token, 's0m3 r4nd0m str1ng', (err, decoded) => {
-    // the 401 code is for unauthorized status
-    if (err) { return res.status(401).end() }
-
-    const userId = decoded.sub
-
-    const user = usersData.findById(userId)
-    if (!user) {
-      return res.status(401).end()
-    }
-
-    req.user = user
-
-    return next()
-  })
+  else {
+    jwt.verify(token, config.jwtSecret, (err, decoded) => {
+      if (err) {
+        res.json({
+          isAuth: false,
+          message: "Failed authentication"
+        })
+      }
+      else {
+        req.userid = decoded.id;
+        return next()
+      }
+    })
+  }
 }
