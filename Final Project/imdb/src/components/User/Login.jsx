@@ -34,10 +34,11 @@ class Login extends Component {
             })
             .then(data => data.json())
             .then(response => {
-                console.log(response.user)
+                console.log(response.token)
                 if (response.result.success && response.token) {
                     localStorage.setItem('token', response.token);
-                    this.props.setUserProfile(JSON.stringify(response.user));
+                    localStorage.setItem('userEmail', response.user.email);
+                    // this.props.setUserProfile(response.user);
                     console.log('success!')
                     this.props.history.push('/movies');
                 }

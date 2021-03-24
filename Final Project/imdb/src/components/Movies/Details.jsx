@@ -34,9 +34,8 @@ class Details extends Component {
                         <ul >
                             <li>&#11088; {this.state.movie.rating || 0} / 10</li>
                             <li>Director/s: {producers}</li>
-                            
                         </ul>
-                        <p id="description">{description}</p>
+                        <p id="movie-description">{description}</p>
                     </div>
                 </div>
             </div>)

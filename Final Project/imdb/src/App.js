@@ -14,36 +14,38 @@ import React, { Component } from 'react';
 
 
 class App extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       isLoggedIn: false,
       userProfile: {}
     }
-    this.setUserProfile = this.setUserProfile.bind(this);
+
+    // this.setUserProfile = this.setUserProfile.bind(this);
 
   }
-  setUserProfile(user) {
-    if (user) {
-      this.setState({
-        isLoggedIn: true,
-        userProfile: JSON.parse(user)
-      })
-    }
-    else{
-      this.setState({
-        isLoggedIn:false
-      })
-    }
-  }
+  // setUserProfile(user) {
+
+  //   if (user) {
+  //     this.setState({
+  //       isLoggedIn: true,
+  //       userProfile: user
+  //     })
+  //   }
+  //   else{
+  //     this.setState({
+  //       isLoggedIn:false
+  //     })
+  //   }
+  // }
   render() {
     return (
       <div id="hero" >
         <BrowserRouter>
-          <Nav data={this.state} history={this.props.history} setUserProfile={this.setUserProfile}/>
+        <Nav data={this.state} />
           <Route path='/' exact component={Welcome} />
           <Route path='/register' component={Register} />
-          <Route path='/login' render={() => <Login history={this.props.history} setUserProfile={this.setUserProfile} />} />
+          <Route path='/login' render={() => <Login history={this.props.history} />} />
           <Route path='/movies' component={Catalogue} />
           <Route path='/addMovie' component={AddMovies} />
           <Route path='/users' component={AdminPage} />

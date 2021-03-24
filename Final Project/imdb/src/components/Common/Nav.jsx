@@ -1,19 +1,19 @@
 import React, { Component } from 'react'
-import { Link } from "react-router-dom"
+import { Redirect,Link } from "react-router-dom"
 
 class Nav extends Component {
     constructor(props) {
         super(props)
-
-        // // this.setNav = this.setNav.bind(this);
+        this.state = {
+            user: {}
+        }
         this.logout = this.logout.bind(this);
     }
     logout() {
-        this.props.setUserProfile(undefined);
+        localStorage.clear();
+        return <Redirect to='/' />
     }
-
     render() {
-
         return (
             <header id='header' className="fixed-top " >
                 <div className="container d-flex align-items-center ">
@@ -24,10 +24,10 @@ class Nav extends Component {
                             <li className="active"><Link to="/about">About</Link></li>
                             <li className="active"><Link to="/contacts">Contacts</Link></li>
                             <li className="active"><Link to="/movies">Catalogue</Link></li>
-                            {this.props.data.isLoggedIn && <li className="active"><Link to="/users">{this.props.data.userProfile.email}</Link></li>}
-                            {this.props.data.isLoggedIn && <li className="active"><Link to="#" onClick={() => this.logout()}>Logout</Link></li>}
-                            {!this.props.data.isLoggedIn && <li className="active"><Link to="/login">Login</Link></li>}
-                            {!this.props.data.isLoggedIn && <li className="active"><Link to="/register" >Register</Link></li>}
+                            {localStorage.getItem('userEmail') && <li className="active"><Link to="/users">{localStorage.getItem('userEmail')}</Link></li>}
+                            {localStorage.getItem('userEmail') && <li className="active"><Link to="#" onClick={() => this.logout()}>Logout</Link></li>}
+                            {!localStorage.getItem('userEmail') && <li className="active"><Link to="/login">Login</Link></li>}
+                            {!localStorage.getItem('userEmail') && <li className="active"><Link to="/register" >Register</Link></li>}
                         </ul>
                     </nav>
                 </div>

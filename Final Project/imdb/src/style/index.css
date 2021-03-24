@@ -29,7 +29,6 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
@@ -329,6 +328,7 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 100vh;
   height: fit-content;
   background: url("../img/hero-bg.jpg") top center;
+  background-color: rgba(0, 0, 0, 0.2);
   background-size: cover;
   position: relative;
   text-align: center;
@@ -485,10 +485,9 @@ section {
   }
 }
 
-
 .catalogue {
   width: 90%;
-  margin: 3rem auto 10rem;
+  margin: 3rem auto 20rem;
   display: grid;
   grid-template-columns: auto auto auto auto auto;
   grid-gap: 0px 0;
@@ -540,35 +539,34 @@ section {
   opacity: 1;
   color: white;
   border: 1px solid #8f8f838f;
-
 }
 
 .flip-card-front>button {
   margin: 0 auto;
-  padding:0.5rem;
+  padding: 0.5rem;
   background: #cc1616;
   background-color: rgba(255, 255, 255, 0.2);
   color: #fff;
   border-color: rgba(255, 255, 255, 0.2);
   border-radius: 0.5rem;
 }
+
 .flip-card-front>button>a:hover {
   color: #fff;
 }
+
 .flip-card-front>button:hover {
   margin: 0 auto;
-  padding:0.5rem;
+  padding: 0.5rem;
   background-color: rgba(255, 255, 255, 0.6);
   color: #fff;
   border-color: rgba(255, 255, 255, 0.6);
   border-radius: 0.5rem;
-
 }
-
 
 .flip-card-front>img {
   width: 100%;
-  height: 70%;
+  height: auto;
   margin: 0 auto;
 }
 
