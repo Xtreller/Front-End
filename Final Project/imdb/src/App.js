@@ -9,6 +9,7 @@ import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
 import Details from './components/Movies/Details';
 import Nav from './components/Common/Nav';
+import ProtectedRoute from './components/Common/ProtectedRoute';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import React, { Component } from 'react';
 
@@ -18,38 +19,30 @@ class App extends Component {
     super(props)
     this.state = {
       isLoggedIn: false,
-      userProfile: {}
+      userRole: '',
     }
 
-    // this.setUserProfile = this.setUserProfile.bind(this);
-
   }
-  // setUserProfile(user) {
+  auth() {
+    if (localStorage.getItem('token')) {
+      this.setState({ isLoggedIn: true, userRole: localStorage.getItem('userRole') })
+    }
+  }
+  componentDidMount = () => this.auth();
 
-  //   if (user) {
-  //     this.setState({
-  //       isLoggedIn: true,
-  //       userProfile: user
-  //     })
-  //   }
-  //   else{
-  //     this.setState({
-  //       isLoggedIn:false
-  //     })
-  //   }
-  // }
+
   render() {
     return (
       <div id="hero" >
         <BrowserRouter>
-        <Nav data={this.state}/>
+          <Nav data={this.state} />
           <Route path='/' exact component={Welcome} />
           <Route path='/register' component={Register} />
           <Route path='/login' render={() => <Login history={this.props.history} />} />
           <Route path='/movies' component={Catalogue} />
           <Route path='/addMovie' component={AddMovies} />
-          <Route path='/users' component={AdminPage} />
           <Route path='/Details/:movieid' component={Details} />
+          <ProtectedRoute path='/users' component={AdminPage} isAuth={this.state.userRole} />
           <footer >
             <p>
               Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021

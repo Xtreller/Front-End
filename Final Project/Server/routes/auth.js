@@ -10,7 +10,7 @@ const router = new express.Router()
 
 router.post('/register', (req, res, next) => {
   const { name, email, password } = req.body;
-
+  console.log(req.body.name)
 
   let result;
   if (name.length < 3) {
@@ -37,7 +37,7 @@ router.post('/register', (req, res, next) => {
           errors: 'Check if form is valid'
         };
       }
-      if (!err) {
+      if (!result) {
         users.save(req.body);
         return result = {
           success: true,

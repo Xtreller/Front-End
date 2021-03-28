@@ -15,7 +15,7 @@ class Nav extends Component {
         this.props.history.push('/')
     }
     setUser() {
-        const logged = localStorage.getItem('userEmail');
+        const logged = localStorage.getItem('token');
         if (logged) {
             this.setState({ user: logged })
         }
