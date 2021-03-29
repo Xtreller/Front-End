@@ -3,7 +3,6 @@
     padding: 0;
     width: 80%;
     margin: 3rem auto 5rem;
-    
 }
 
 .userList>li+.userList>li {
@@ -22,6 +21,7 @@
     padding: 7px;
     color: white;
 }
+
 .userList>*:hover {
     border-color: #cc1616;
     background-color: #cc1616;
@@ -57,7 +57,7 @@
 
 .btn-action {
     font-family: "Raleway", sans-serif;
-    text-transform:capitalize;
+    text-transform: capitalize;
     width: 40px;
     height: 40px;
     font-size: 14px;

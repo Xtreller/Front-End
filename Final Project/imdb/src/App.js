@@ -21,15 +21,8 @@ class App extends Component {
       isLoggedIn: false,
       userRole: '',
     }
-
   }
-  auth() {
-    if (localStorage.getItem('token')) {
-      this.setState({ isLoggedIn: true, userRole: localStorage.getItem('userRole') })
-    }
-  }
-  componentDidMount = () => this.auth();
-
+ 
 
   render() {
     return (
@@ -38,11 +31,11 @@ class App extends Component {
           <Nav data={this.state} />
           <Route path='/' exact component={Welcome} />
           <Route path='/register' component={Register} />
-          <Route path='/login' render={() => <Login history={this.props.history} />} />
-          <Route path='/movies' component={Catalogue} />
-          <Route path='/addMovie' component={AddMovies} />
+          <Route path='/login' render={() => <Login history={this.props.history} auth={this.auth} />} />
           <Route path='/Details/:movieid' component={Details} />
-          <ProtectedRoute path='/users' component={AdminPage} isAuth={this.state.userRole} />
+          <ProtectedRoute path='/addMovie' component={AddMovies} />
+          <ProtectedRoute path='/movies' component={Catalogue} isAuth={localStorage.getItem('token')} />
+          <ProtectedRoute path='/users' component={AdminPage} isAuth={localStorage.getItem('token')} />
           <footer >
             <p>
               Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021

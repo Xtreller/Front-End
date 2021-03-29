@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class Movie extends Component {
+class AddMovie extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -10,11 +10,11 @@ class Movie extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(e) {
-        const inputFieldnName = e.target.dataset.name || e.target.name;
+        const field = e.target.dataset.name || e.target.name;
         const value = e.target.value;
         const newMovie = {};
-        newMovie[inputFieldnName] = value;
-        console.log(inputFieldnName, value)
+        newMovie[field] = value;
+        console.log(field, value)
         this.setState({
             movie: Object.assign(this.state.movie, newMovie)
         })
@@ -80,4 +80,4 @@ class Movie extends Component {
         )
     }
 }
-export default Movie
+export default AddMovie

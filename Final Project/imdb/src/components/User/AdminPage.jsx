@@ -14,7 +14,6 @@ class AdminPage extends Component {
     makeAdmin(userid) {
         console.log(userid);
         fetch('http://localhost:5000/auth/makeAdmin/' + userid)
-
     }
     banUser(userid) {
         console.log(userid);
@@ -34,7 +33,7 @@ class AdminPage extends Component {
     }
     componentDidMount = () => this.getUsers();
 
-    componentDidUpdate(_,prevState) {
+    componentDidUpdate(_, prevState) {
         if (prevState.users !== this.state.users) {
             this.getUsers();
         }
@@ -44,7 +43,7 @@ class AdminPage extends Component {
         return (
             <ul className="userList">
                 <li ><h3>Name</h3><h3>Email</h3><h3>Banned</h3><h3>Role</h3><h3>Admin</h3><h3>Block</h3></li>
-                {this.state.users ? this.state.users.map((user, idx) => { return <li key={idx} >{idx}<h3>{user.name}</h3><h3>{user.email}</h3><h3>{user.banned ? 'Yes' : 'No'}</h3><h3>{user.role}</h3><button onClick={() => this.makeAdmin(user._id)} type="button" className="btn-action">Make {user.role === 'user' ? 'Admin' : 'User'} </button><button onClick={() => this.banUser(user._id)} type="button" className="btn-action">{user.banned ? 'unblock' : 'block'}</button></li> }) : <h3>No Users yet!</h3>}
+                {this.state.users ? this.state.users.map((user, idx) => { return <li key={idx} >{idx + 1}<h3>{user.name}</h3><h3>{user.email}</h3><h3>{user.banned ? 'Yes' : 'No'}</h3><h3>{user.role}</h3><button onClick={() => this.makeAdmin(user._id)} type="button" className="btn-action">Make {user.role === 'user' ? 'Admin' : 'User'} </button><button onClick={() => this.banUser(user._id)} type="button" className="btn-action">{user.banned ? 'unblock' : 'block'}</button></li> }) : <h3>No Users yet!</h3>}
             </ul>
         )
     }

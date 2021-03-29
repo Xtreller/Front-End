@@ -1,0 +1,45 @@
+.comment-container {
+    width: 65%;
+    margin: 0 auto;
+    margin-bottom: 5rem;
+    justify-content: center;
+    align-self: center;
+}
+
+.comment-input {
+    width: 70%;
+    align-self: center;
+    float: auto;
+}
+
+.comment-li {
+    color: white;
+    text-decoration: none;
+    list-style: none;
+    width: 100%;
+    text-align: start;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 2px;
+    border-radius: 5rem;
+}
+
+.comment-btn {
+    font-family: "Raleway", sans-serif;
+    text-transform: capitalize;
+    width: 25%;
+    height: 35px;
+    font-size: 14px;
+    align-items: center;
+    white-space: nowrap;
+    background: #cc1616;
+    border: 1px solid #cc1616;
+    color: #fff;
+    float:auto;
+}
+
+.comment-btn:active {
+    background: tomato;
+    border: 1px solid tomato;
+    transition: 10ms;
+}

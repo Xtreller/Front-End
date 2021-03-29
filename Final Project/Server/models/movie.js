@@ -16,6 +16,6 @@ const movieModel = new mongoose.Schema({
     publishDate: Date,
     description: String,
     rating: { type: Number, min: 1, max: 10 },
-    comments: String,
+    comments: [String],
 });
 module.exports = new mongoose.model('Movie', movieModel);

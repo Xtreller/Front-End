@@ -39,8 +39,8 @@ class Login extends Component {
 
                 if (response.result.success && response.token) {
                     localStorage.setItem('token', response.token);
-                    localStorage.setItem('userEmail', response.user.email);
-                    localStorage.setItem('userRole', response.user.role);
+                    localStorage.setItem('userEmail',response.user.email)
+                    localStorage.setItem('userRole',response.user.role)
                     console.log('success!')
                     this.props.history.push('/movies');
                 }

@@ -1,27 +1,29 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Redirect } from 'react-router';
-import { Route, Link } from 'react-router-dom';
+import { Route, withRouter } from 'react-router-dom';
 import AdminPage from '../User/AdminPage';
 
 
-function ProtectedRoute({ isAuth: isAuth, component: Component, ...rest }) {
-    console.log(Component)
-    console.log(isAuth)
+function ProtectedRoute({ userRole: userRole, isAuth: isAuth, component: Component, ...rest }) {
+  
     return (
         <Route {...rest}
-            render={(props) => {
-                if(Component === AdminPage){
-                    if(isAuth !== "admin"){
+            render={props => {
+                if (Component === AdminPage) {
+                    if (localStorage.getItem('userRole') !== 'admin') {
                         return (<Redirect to={{
                             pathname: '/',
                             state: { from: props.location }
                         }} />)
                     }
-                }
-                if (isAuth) {
-                    return <Component />
+                    else {
+                        return <Component />
+                    }
                 }
                 else {
+                    if (isAuth) {
+                        return <Component />
+                    }
                     return (<Redirect to={{
                         pathname: '/',
                         state: { from: props.location }
@@ -32,4 +34,4 @@ function ProtectedRoute({ isAuth: isAuth, component: Component, ...rest }) {
     );
 }
 
-export default ProtectedRoute;
+export default withRouter(ProtectedRoute);
