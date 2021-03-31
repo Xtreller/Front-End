@@ -16,37 +16,39 @@ router.post('/register', (req, res, next) => {
   if (name.length < 3) {
     result = {
       success: false,
-      message: "Name must be at least 3 charackters!",
-      errors: 'Check if form is valid'
-    };
+      message: ["Name must be at least 3 charackters! \n"]
+    }
   }
   if (password.length < 8) {
     result = {
       success: false,
-      message: "Password must be at least 8 symbols long1",
-      errors: 'Check if form is valid'
-    };
+      message: result.message + "Password must be at least 8 symbols! \n"
+    }
   }
-
+  if (result) {
+    console.log(result.message)
+    res.json({ result })
+  }
   userModel.exists({ email: email })
     .then(exists => {
       if (exists) {
-        result = {
-          success: false,
-          message: 'Email already exists',
-          errors: 'Check if form is valid'
-        };
+        res.json({
+          result: {
+            success: false,
+            message: 'Email already exists!'
+          }
+        })
       }
       if (!result) {
         users.save(req.body);
-        return result = {
-          success: true,
-          message: 'You have successfuly registered!',
-        };
+        res.json({
+          result: {
+            success: true,
+            message: 'You have successfuly registered!'
+          }
+        })
       }
-
     })
-  return res.json(result);
 })
 
 router.get('/users', verifyJwt, (req, res, next) => {
@@ -61,20 +63,25 @@ router.post('/login', (req, res, next) => {
   const { email, password } = req.body;
   userModel.findOne({ email: email })
     .then(user => {
+
       if (!user) {
-        return result = {
-          success: false,
-          message: 'User not found'
-        }
+        res.json({
+          result: {
+            success: false,
+            message: 'Invalid Username or Password!'
+          }
+        })
       }
       else {
         bcrypt.compare(password, user.password)
           .then(match => {
             if (!match) {
-              return result = {
-                success: false,
-                message: "Invalid Username or Password!"
-              }
+              res.json({
+                result: {
+                  success: false,
+                  message: "Invalid Username or Password!"
+                }
+              })
             }
             const token = jwt.sign({ id: user._id }, config.jwtSecret);
             result = {
@@ -86,29 +93,30 @@ router.post('/login', (req, res, next) => {
             res.status(200).json({ result, token, user });
           });
       }
+
     }).catch(err => console.log(err));
 })
-router.get('/isAuth',verifyJwt,(req,res)=>{
-    res.json('Authentication Successful!');
+router.get('/isAuth', verifyJwt, (req, res) => {
+  res.json('Authentication Successful!');
 })
 
 router.get('/block/:userid', (req, res, next) => {
 
   const returnUsers = () => userModel.find({})
-  .then(users => res.json({ userCollection: users }))
-userModel.findOne({ _id: req.params.userid })
-  .then(user => {
-    const { name, banned } = user
-    console.log(name, banned);
-    if (banned) {
-      userModel.updateOne({ _id: req.params.userid }, { banned: false })
-        .then(returnUsers)
-    }
-    else {
-      userModel.updateOne({ _id: req.params.userid }, { banned: true })
-        .then(returnUsers)
-    }
-  })
+    .then(users => res.json({ userCollection: users }))
+  userModel.findOne({ _id: req.params.userid })
+    .then(user => {
+      const { name, banned } = user
+      console.log(name, banned);
+      if (banned) {
+        userModel.updateOne({ _id: req.params.userid }, { banned: false })
+          .then(returnUsers)
+      }
+      else {
+        userModel.updateOne({ _id: req.params.userid }, { banned: true })
+          .then(returnUsers)
+      }
+    })
 })
 router.get('/makeAdmin/:userid', (req, res, next) => {
   const returnUsers = () => userModel.find({})

@@ -34,15 +34,19 @@ class Login extends Component {
             })
             .then(data => data.json())
             .then(response => {
-                console.log(response.token)
-                console.log('user',response.user)
+                console.log(response.message)
+                console.log('user', response.user)
 
                 if (response.result.success && response.token) {
                     localStorage.setItem('token', response.token);
-                    localStorage.setItem('userEmail',response.user.email)
-                    localStorage.setItem('userRole',response.user.role)
+                    localStorage.setItem('userEmail', response.user.email)
+                    localStorage.setItem('userRole', response.user.role)
                     console.log('success!')
                     this.props.history.push('/movies');
+                }
+                else {
+                    console.log(response.result);
+                    this.setState({ err: response.result.message })
                 }
             })
             .catch(err => console.log(err))
@@ -53,10 +57,12 @@ class Login extends Component {
         return (
 
             <form >
+                {<span className='err' htmlFor="comment-input">{this.state.err}</span>}
+
                 <h1>Login</h1>
                 <div className="form-group" >
                     <label htmlFor="exampleInputEmail1">Email address</label><br />
-                    <input data-name="email" onChange={this.handleChange} type="email"  aria-describedby="emailHelp"  />
+                    <input data-name="email" onChange={this.handleChange} type="email" aria-describedby="emailHelp" />
                 </div>
                 <div className="form-group " >
                     <label htmlFor="exampleInputPassword1">Password</label><br />

@@ -2,7 +2,7 @@ form {
     /* background: url("../img/hero-bg.jpg") top center ; */
     filter: opacity(100);
     background-size: cover;
-    padding-top: 7%;
+    padding-top: 3%;
     z-index: 1;
     margin-bottom: 5rem;
     height: auto;
@@ -46,13 +46,14 @@ textarea {
     border-bottom: 2px solid red;
     border-radius: 0.4rem 0.4rem;
 }
-textarea:focus{
-    background-color: rgba(255, 255, 255, 0.4);
 
+textarea:focus {
+    background-color: rgba(255, 255, 255, 0.4);
 }
+
 #description {
     max-height: 500px;
-    max-width: 500px; 
+    max-width: 500px;
     min-width: 200px;
     min-height: 30px;
 }
