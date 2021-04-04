@@ -8,7 +8,7 @@ class Movie extends Component {
             movie: {}
         }
     }
-    
+
     render() {
         return (
             <div className="flip-card">
@@ -19,14 +19,8 @@ class Movie extends Component {
                             alt="Loading..." />
                         <h5>{this.props.movie.title}</h5>
                         <p>{this.props.movie.rating}</p>
-                        <button id="card-btn"><Link  to={{pathname: `/Details/${this.props.movie._id}`}} >Details</Link></button>
+                        <button id="card-btn"><Link to={{ pathname: `/Details/${this.props.movie._id}` }} >Details</Link></button>
                     </div>
-                    {/* <div className="flip-card-back">
-                        <h1>{this.props.movie.title}</h1>
-                        <p>{this.props.movie.rating}</p>
-                        <p>We love that movie &#10084;</p>
-                        <a href="/movies">Details</a>
-                    </div> */}
                 </div>
             </div>
         )

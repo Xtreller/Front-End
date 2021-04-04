@@ -28,7 +28,6 @@ class Comments extends Component {
     }
     addComment(e) {
         e.preventDefault();
-        console.log('click',this.state)
         const movieid = this.props.movieid;
         if (!this.state.newComment) {
             return this.setState({ err: 'Comment cant be empty!' })
@@ -46,13 +45,13 @@ class Comments extends Component {
                 .catch(err => console.log(err));
         }
         this.setState({ newComment: '' });
+        document.getElementsByTagName('input')[0].value = ""
     }
     componentDidMount = () => this.getComments();
     render() {
-        console.log(this.state.newComment);
         return (
             <div className="comment-container">
-                <form  onSubmit={this.addComment}>
+                <form onSubmit={this.addComment}>
                     {<label className='err' htmlFor="comment-input">{this.state.err}</label>}
                     <input type='text' className="comment-input" data-name="comment" onChange={this.handleChange} />
                     <button className="comment-btn" type="submit">Post Comment</button>

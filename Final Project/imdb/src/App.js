@@ -1,6 +1,7 @@
 import './App.css';
 import './style/index.css';
 import './style/forms.css';
+import './style/scroller.css';
 import Register from './components/User/Register';
 import Login from './components/User/Login';
 import AdminPage from './components/User/AdminPage';
@@ -25,6 +26,7 @@ class App extends Component {
  
 
   render() {
+    console.log(localStorage.getItem('token'));
     return (
       <div id="hero" >
         <BrowserRouter>
