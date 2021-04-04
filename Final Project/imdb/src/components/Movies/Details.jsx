@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import Comments from './Comments';
 import Carousel from './Carousel';
 
@@ -28,6 +29,7 @@ class Details extends Component {
         }
         return (
             <div>
+                {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/editMovie/${this.props.match.params.movieid}` }}>Edit Movie</Link></span>:''}
 
                 <div className="details-container">
                     <div className="carousel">

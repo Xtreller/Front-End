@@ -13,10 +13,10 @@ export default class Slider extends Component {
 
     changeImage(id) {
         const maxcnt = this.props.images.length
-        if (this.props.imageidx + id > maxcnt) {
+        if (this.state.imageidx + id > maxcnt) {
             this.setState(({ imageidx: this.props.images.length - 3 }))
         }
-        if (this.props.imageidx - id <= 0) {
+        if (this.state.imageidx - id <= 0) {
             this.setState(({ imageidx: 0 }))
         }
         else {

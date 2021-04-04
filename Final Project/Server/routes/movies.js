@@ -8,10 +8,20 @@ const movieModel = require('../models/movie');
 
 
 router.post('/create', (req, res, next) => {
-    console.log(req.body.carouselImages)
-    console.log(req.body.actors)
-    console.log(req.body.genre)
+
     Movies.addMovie((req.body))
+    return res.status(200).json(Movies.retriveMovies());
+
+})
+router.post('/edit/:movieid', (req, res, next) => {
+    console.log('Updating...')
+    const { title, image, carouselImages, description, actors, producers, genre } = req.body;
+    movieModel
+        .updateOne(
+            { _id: req.params.movieid },
+            { title, image, carouselImages, description, actors, producers, genre })
+        .then(res=>console.log(res))
+        .catch(err => console.log(err))
     return res.status(200).json(Movies.retriveMovies());
 
 })

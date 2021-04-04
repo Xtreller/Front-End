@@ -22,7 +22,7 @@ class Catalogue extends Component {
         console.log(this.state)
         return (
             <div >
-                <span className="btn-secondary"><Link to="/addMovie">Add Movie</Link></span>
+                {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to="/addMovie">Add Movie</Link></span>:''}
                 <div className="catalogue">
                     {this.state.movies.map((movie,i)=><Movie key={i} index={i} movie={movie} />)}
                 </div>

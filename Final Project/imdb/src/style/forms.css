@@ -16,7 +16,7 @@ form label {
 input {
     margin: 0.5rem;
     resize: horizontal;
-    width: 200px;
+    width: 350px;
     height: 30px;
     background-color: rgba(255, 255, 255, 0);
     color: #fff;
@@ -26,34 +26,46 @@ input {
 
 label {
     margin-bottom: 3rem;
+    padding: 3rem;
 }
 
 input:focus {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
     border-bottom: 4px solid red;
 }
 
 textarea {
     min-width: 200px;
     min-height: 30px;
-    width: 200px;
+    width: 350px;
     height: 30px;
     max-width: 200px;
     max-height: 50px;
     background-color: rgba(255, 255, 255, 0);
     color: #fff;
     border: 0;
-    border-bottom: 2px solid red;
-    border-radius: 0.4rem 0.4rem;
+    border-bottom: 3px solid red;
+    padding: 0.5rem;
 }
 
 textarea:focus {
-    background-color: rgba(255, 255, 255, 0.4);
+    background-color: rgba(0, 0, 0, 0.5);
+
 }
 
 #description {
     max-height: 500px;
     max-width: 500px;
-    min-width: 200px;
-    min-height: 30px;
+    width: 350px;
+    height: auto;
+    min-height: 75px;
+    text-align: center;
+}
+
+#actors {
+    max-height: 500px;
+    max-width: 500px;
+    width: 350px;
+    height: 25px;
+    text-align: center;
 }

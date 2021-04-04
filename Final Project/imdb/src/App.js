@@ -8,6 +8,7 @@ import AdminPage from './components/User/AdminPage';
 import Welcome from './components/Common/Welcome';
 import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
+import EditMovie from './components/Movies/EditMovie';
 import Details from './components/Movies/Details';
 import Nav from './components/Common/Nav';
 import ProtectedRoute from './components/Common/ProtectedRoute';
@@ -35,6 +36,7 @@ class App extends Component {
           <Route path='/register' component={Register} />
           <Route path='/login' render={() => <Login history={this.props.history} auth={this.auth} />} />
           <Route path='/Details/:movieid' component={Details} />
+          <Route path='/editMovie/:movieid' component={EditMovie} />
           <ProtectedRoute path='/addMovie' component={AddMovies} />
           <ProtectedRoute path='/movies' component={Catalogue} isAuth={localStorage.getItem('token')} />
           <ProtectedRoute path='/users' component={AdminPage} isAuth={localStorage.getItem('token')} />

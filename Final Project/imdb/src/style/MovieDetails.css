@@ -21,10 +21,9 @@
 #front-cover {
     float: left;
     display: flex;
-    align-self: flex-start;
     width: 300px;
     position: absolute;
-    top: 320px;
+    top: 27%;
     height: 400px;
 }
 
