@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom'
 
 class AddMovie extends Component {
     constructor(props) {
@@ -10,10 +11,15 @@ class AddMovie extends Component {
         this.handleSubmit = this.handleSubmit.bind(this);
     }
     handleChange(e) {
+        const arrayFields = ["carouselImages", "actors", "genre"]
         const field = e.target.dataset.name || e.target.name;
         const value = e.target.value;
         const newMovie = {};
         newMovie[field] = value;
+        if (arrayFields.includes(field)) {
+            newMovie[field] = value.trim().split(', ');
+            console.log(newMovie[field],value);
+        }
         console.log(field, value)
         this.setState({
             movie: Object.assign(this.state.movie, newMovie)
@@ -30,6 +36,10 @@ class AddMovie extends Component {
             body: JSON.stringify(this.state.movie),
         })
             .then(res => res.json())
+            .then(
+                this.props.history.push('/movies')
+
+            )
             .then(console.log())
     }
 
@@ -48,13 +58,13 @@ class AddMovie extends Component {
                 </div>
                 <br />
                 <div className="form-group" >
-                    <label htmlFor="imageCarousel">Carousel</label><br />
-                    <input data-name="imageCarousel" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
+                    <label htmlFor="carouselImages">Carousel</label><br />
+                    <input data-name="carouselImages" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
                 </div>
                 <br />
                 <div className="form-group" >
-                    <label htmlFor="imageCarousel">Genre</label><br />
-                    <input data-name="imageCarousel" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
+                    <label htmlFor="genre">Genre</label><br />
+                    <input data-name="genre" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
                 </div>
                 <br />
                 <div className="form-group" >
@@ -68,8 +78,8 @@ class AddMovie extends Component {
                 </div>
                 <br />
                 <div className="form-group" >
-                    <label htmlFor="producer">Actors</label><br />
-                    <textarea data-name="producers" onChange={this.handleChange} type="text" className="form-control" id="producers" aria-describedby="produecersHelp" />
+                    <label htmlFor="actors">Actors</label><br />
+                    <textarea data-name="actors" onChange={this.handleChange} type="text" className="form-control" id="producers" aria-describedby="produecersHelp" />
                 </div>
                 <br />
 
@@ -80,4 +90,4 @@ class AddMovie extends Component {
         )
     }
 }
-export default AddMovie
+export default withRouter(AddMovie)
