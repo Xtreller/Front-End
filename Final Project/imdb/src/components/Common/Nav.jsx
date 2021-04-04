@@ -33,9 +33,9 @@ class Nav extends Component {
                     <nav className="nav-menu d-none d-lg-block">
                         <ul>
                             <li className="active"><Link to="/">Home</Link></li>
-                            <li className="active"><Link to="/about">About</Link></li>
-                            <li className="active"><Link to="/contacts">Contacts</Link></li>
                             <li className="active"><Link to="/movies">Catalogue</Link></li>
+                            <li className="active"><Link to="/contacts">Contacts</Link></li>
+                            <li className="active"><Link to="/about">About</Link></li>
                             {userEmail && <li className="active"><Link to="/users">{userEmail}</Link></li>}
                             {userEmail && <li className="active"><Link to="#" onClick={() => this.logout()}>Logout</Link></li>}
                             {!userEmail && <li className="active"><Link to="/login">Login</Link></li>}

@@ -8,7 +8,7 @@ const movieModel = new mongoose.Schema({
         enum: ['horror', 'romantic', 'thriller',
             'adventure', 'criminal', 'mystery',
             'fantasy', 'sports', 'action',
-            , 'comedy', 'action']
+            , 'comedy', 'action','animation','anime']
     }],
     carouselImages: [String],
     actors: { type: Array },

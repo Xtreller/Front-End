@@ -46,6 +46,14 @@
     flex-direction: column;
     margin-bottom: 10rem;
 }
+.li-info{
+    width: 47%;
+    word-wrap: break-word;
+    padding-bottom:5px;
+    margin: 0;
+    /* border:1px solid red; */
+
+}
 
 .movie-info>h5 {
     margin: 0;

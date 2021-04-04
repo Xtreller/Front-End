@@ -486,11 +486,11 @@ section {
 }
 
 .catalogue {
-  width: 90%;
+  width: 80%;
   margin: 3rem auto 20rem;
   display: grid;
   grid-template-columns: auto auto auto auto auto;
-  grid-gap: 0px 0;
+  grid-gap: 10px 0;
   position: relative;
   justify-content: space-between;
 }
@@ -502,6 +502,7 @@ section {
   margin: 0;
   width: 250px;
   height: 350px;
+  margin-bottom: 10rem;
 }
 
 /* This container is needed to position the front and back side */
@@ -575,14 +576,6 @@ section {
   transition: 0.3s;
 }
 
-/* Style the back side */
-
-.flip-card-back {
-  background-color: #cc1616;
-  color: white;
-  transform: rotateY(180deg);
-}
-
 footer {
   display: flex;
   position: fixed;
@@ -609,7 +602,8 @@ footer>a {
   color: #fff;
   text-align: center;
 }
-.err{
+
+.err {
   display: flex;
   justify-content: center;
   align-self: center;
@@ -617,6 +611,6 @@ footer>a {
   font-style: bold;
   font-size: 20px;
   padding: 0;
-  margin:0 auto;
+  margin: 0 auto;
   margin-bottom: 0.5rem;
 }

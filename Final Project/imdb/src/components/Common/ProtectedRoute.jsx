@@ -2,14 +2,14 @@ import React from 'react';
 import { Redirect } from 'react-router';
 import { Route, withRouter } from 'react-router-dom';
 import AdminPage from '../User/AdminPage';
+import AddMovies from '../Movies/AddMovies';
 
 
-function ProtectedRoute({ userRole: userRole, isAuth: isAuth, component: Component, ...rest }) {
-  
+function ProtectedRoute({ userRole, isAuth, component: Component, ...rest }) {
     return (
         <Route {...rest}
             render={props => {
-                if (Component === AdminPage) {
+                if (Component === AdminPage || Component === AddMovies) {
                     if (localStorage.getItem('userRole') !== 'admin') {
                         return (<Redirect to={{
                             pathname: '/',
