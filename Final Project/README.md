@@ -1,10 +1,10 @@
-# Getting Started with Create React App
+# Getting Started with My-IMDB project
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
 
-In the project directory, you can run:
+
+In the project directory, to run project:
 
 ### `npm start`
 
@@ -68,3 +68,41 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+BEFORE INITIAL START:
+
+### 'in Server Directory'
+ ### 'npm install'
+ 
+### 'in imdb Directory'
+ ### `npm install`
+
+ To start Server: 
+ ### 'node index or npm run'
+
+ To start client: 
+ ### `npm start`
+
+My-IMdb is a University Project for exercese and  learning ReactJS 
+
+Resources for Learning: 
+* https://softuni.bg/trainings/3315/reactjs-march-2021 
+* https://softuni.bg/trainings/2022/reactjs-fundamentals-june-2018#lesson-8901
+
+Used Technologies: 
+ # NodeJs 
+ # ExpressJs
+ # ReactJs
+ # Javascript
+ # Bootstrap, CSS 
+ # MongoDb 
+ # Mongoose
+
+Project Uses Description:
+ My-IMDB is a project for Uploading and reviewing Movies.
+ Every Register User can see the list of movies, its Details , and a comment under the movie,
+ Every Admin User can Add Movie , Block User , Make User Admin or remove it as Admin plus User actions.
+ 
+ Paths for Adding movie and admin actions(block, make admin ) are protected, only available for admins.
+ Users have access to Seeing the list of movies, commenting each movie, and seeing its details and other user's reviews.
+
