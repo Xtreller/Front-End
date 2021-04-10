@@ -69,19 +69,18 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-BEFORE INITIAL START:
+### BEFORE INITIAL START:
 
-### 'in Server Directory'
- ### 'npm install'
+# in Server Directory
+### 'npm install'
  
-### 'in imdb Directory'
- ### `npm install`
+# in imdb Directory
+### `npm install`
 
- To start Server: 
- ### 'node index or npm run'
-
- To start client: 
- ### `npm start`
+# To start Server: 
+### 'node index or npm run'
+# To start client:
+### `npm start`
 
 My-IMdb is a University Project for exercese and  learning ReactJS 
 
@@ -90,13 +89,13 @@ Resources for Learning:
 * https://softuni.bg/trainings/2022/reactjs-fundamentals-june-2018#lesson-8901
 
 Used Technologies: 
- # NodeJs 
- # ExpressJs
- # ReactJs
- # Javascript
- # Bootstrap, CSS 
- # MongoDb 
- # Mongoose
+ * NodeJs 
+ * ExpressJs
+ * ReactJs
+ * Javascript
+ * Bootstrap, CSS 
+ * MongoDb 
+ * Mongoose
 
 Project Uses Description:
  My-IMDB is a project for Uploading and reviewing Movies.
