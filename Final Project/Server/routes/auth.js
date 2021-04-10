@@ -1,6 +1,5 @@
 const express = require('express')
 const bcrypt = require('bcrypt')
-var users = require('../data/users');
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user');
 const config = require('../config/config')
@@ -16,7 +15,7 @@ router.post('/register', (req, res, next) => {
   if (name.length < 3) {
     result = {
       success: false,
-      message: ["Name must be at least 3 charackters! \n"]
+      message: ["Name must be at least 3 letters! \n"]
     }
   }
   if (password.length < 8) {
@@ -40,7 +39,7 @@ router.post('/register', (req, res, next) => {
         })
       }
       if (!result) {
-        users.save(req.body);
+        userModel.save(req.body);
         res.json({
           result: {
             success: true,
@@ -63,7 +62,6 @@ router.post('/login', (req, res, next) => {
   const { email, password } = req.body;
   userModel.findOne({ email: email })
     .then(user => {
-
       if (!user) {
         res.json({
           result: {

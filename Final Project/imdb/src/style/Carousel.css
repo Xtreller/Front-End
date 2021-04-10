@@ -29,6 +29,11 @@
     height: 17%;
 }
 
+.arrow-btn-previous:active {
+    transform: scale(0.75);
+    transition: 0.2s;
+}
+
 .arrow-btn-next {
     position: absolute;
     right: 15px;
@@ -37,4 +42,9 @@
     justify-content: center;
     height: 17%;
     transform: rotate(180deg);
+}
+
+.arrow-btn-next:active {
+    transform: rotate(180deg) scale(0.75);
+    transition: 0.2s;
 }

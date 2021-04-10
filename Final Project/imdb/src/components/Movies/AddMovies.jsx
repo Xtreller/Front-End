@@ -18,9 +18,7 @@ class AddMovie extends Component {
         newMovie[field] = value;
         if (arrayFields.includes(field)) {
             newMovie[field] = value.trim().split(', ');
-            console.log(newMovie[field],value);
         }
-        console.log(field, value)
         this.setState({
             movie: Object.assign(this.state.movie, newMovie)
         })
@@ -28,6 +26,12 @@ class AddMovie extends Component {
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.movie)
+        const { title, image, carouselImages, genre, producers, actors, description } = this.state.movie;
+
+        if (!title || !image || !carouselImages || !genre || !producers || !actors || !description) {
+            this.setState({ err: 'Fields cannot be empty!' })
+            return;
+        }
         fetch('http://localhost:5000/catalogue/create', {
             method: 'POST',
             headers: {
@@ -36,8 +40,14 @@ class AddMovie extends Component {
             body: JSON.stringify(this.state.movie),
         })
             .then(res => res.json())
-            .then(
+            .then(res => {
+                console.log(res)
+                if (!res.success) {
+                    this.setState({ err: res.message })
+                    return;
+                }
                 this.props.history.push('/movies')
+            }
 
             )
             .then(console.log())
@@ -47,6 +57,9 @@ class AddMovie extends Component {
         return (
             <form >
                 <h1>Add Movie</h1>
+                {this.state.err ?
+                    this.state.err.map((m,idx )=>
+                        <label  key={idx} className='err' htmlFor="comment-input">{m}</label>) : 'Loading...'}
                 <div className="form-group" >
                     <label htmlFor="title">Title</label><br />
                     <input data-name="title" onChange={this.handleChange} type="text" className="form-control" id="title" aria-describedby="titlelHelp" />

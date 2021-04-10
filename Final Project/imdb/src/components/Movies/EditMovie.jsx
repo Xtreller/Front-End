@@ -37,7 +37,6 @@ class EditMovie extends Component {
         const movieid = this.props.match.params.movieid;
 
         if (this.state.updated) {
-
             fetch('http://localhost:5000/catalogue/edit/' + movieid, {
                 method: 'POST',
                 headers: {
@@ -48,7 +47,6 @@ class EditMovie extends Component {
                 .then(res => res.json())
                 .then(
                     this.props.history.push('/Details/' + movieid)
-
                 )
                 .catch(err => console.log(err))
         }
