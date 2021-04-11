@@ -2,8 +2,10 @@ const express = require('express')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user');
+const reportModel = require('../models/reports');
 const config = require('../config/config')
 const verifyJwt = require('../middleware/auth-check');
+const transporter = require('../middleware/email-sender');
 
 const router = new express.Router()
 
@@ -133,5 +135,29 @@ router.get('/makeAdmin/:userid', (req, res, next) => {
           .then(returnUsers)
       }
     })
+})
+router.post('/report', (req, res, next) => {
+  var { email, message } = req.body;
+  console.log('report')
+  reportModel.create({ email, content: message, date: Date.now()})
+    .then(() => {
+       reportModel.find({})
+       .then(reports=>{res.json(reports)})
+    })
+
+
+  // var mail = {
+  //   from: email,
+  //   to: config.email,
+  //   subject: `${email} reported this: `,
+  //   text: message
+  // }
+  // transporter.sendMail(mail)
+  // .then(result => res.json(result))
+
+})
+router.get('/user/_logout', (req, res, next) => {
+  res.clearCookie(config.authCookie);
+  res.json({ success: true });
 })
 module.exports = router

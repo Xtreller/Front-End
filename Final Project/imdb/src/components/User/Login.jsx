@@ -35,12 +35,14 @@ class Login extends Component {
             .then(data => data.json())
             .then(response => {
                 console.log(response.message)
-                console.log('user', response.user)
+                console.log('user', response.user.banned)
 
                 if (response.result.success && response.token) {
                     localStorage.setItem('token', response.token);
                     localStorage.setItem('userEmail', response.user.email)
                     localStorage.setItem('userRole', response.user.role)
+
+                    localStorage.setItem('blocked',response.user.banned)
                     console.log('success!')
                     this.props.history.push('/movies');
                 }

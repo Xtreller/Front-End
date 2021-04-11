@@ -19,6 +19,7 @@
     "express": "4.15.3",
     "jsonwebtoken": "7.4.1",
     "mongoose": "^5.12.0",
+    "nodemailer": "^6.5.0",
     "passport": "0.3.2",
     "passport-local": "1.0.0",
     "salt": "^0.5.5",
