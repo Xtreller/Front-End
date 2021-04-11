@@ -9,6 +9,7 @@ import Welcome from './components/Common/Welcome';
 import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
 import EditMovie from './components/Movies/EditMovie';
+import DeleteMovie from './components/Movies/Delete';
 import Details from './components/Movies/Details';
 import Nav from './components/Common/Nav';
 import ProtectedRoute from './components/Common/ProtectedRoute';
@@ -24,7 +25,7 @@ class App extends Component {
       userRole: '',
     }
   }
- 
+
 
   render() {
     console.log(localStorage.getItem('token'));
@@ -39,6 +40,7 @@ class App extends Component {
           <Route path='/editMovie/:movieid' component={EditMovie} />
           <ProtectedRoute path='/addMovie' component={AddMovies} />
           <ProtectedRoute path='/movies' component={Catalogue} isAuth={localStorage.getItem('token')} />
+          <ProtectedRoute path='/deleteMovie/:movieid' component={DeleteMovie} isAuth={localStorage.getItem('token')} />
           <ProtectedRoute path='/users' component={AdminPage} isAuth={localStorage.getItem('token')} />
           <footer >
             <p>

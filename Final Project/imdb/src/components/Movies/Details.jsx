@@ -11,6 +11,7 @@ class Details extends Component {
         this.state = {
             movie: {}
         }
+
     }
     getMovie() {
         const movieid = this.props.match.params.movieid;
@@ -29,7 +30,8 @@ class Details extends Component {
         }
         return (
             <div>
-                {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/editMovie/${this.props.match.params.movieid}` }}>Edit Movie</Link></span>:''}
+                {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/editMovie/${this.props.match.params.movieid}` }}>Edit Movie</Link></span> : ''}
+                {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/deleteMovie/${this.state.movie._id}` }}>Delete Movie</Link></span> : ''}
 
                 <div className="details-container">
                     <div className="carousel">

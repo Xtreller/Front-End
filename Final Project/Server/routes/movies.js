@@ -95,6 +95,12 @@ router.get('/movie/comments/:movieid', (req, res, next) => {
         .then(movie => res.status(200).json({ comments: movie.comments }))
         .catch(err => console.log(err));
 })
+router.post('/movie/delete/:movieid', (req, res, next) => {
+    const movieid = req.params.movieid;
+    movieModel.deleteOne({ _id: movieid })
+        .then(res=>console.log(res))
+        .catch(err => console.log(err));
+})
 router.post('/movie/addComment/:movieid', (req, res, next) => {
     const movieid = req.params.movieid;
     const comment = req.body.comment;

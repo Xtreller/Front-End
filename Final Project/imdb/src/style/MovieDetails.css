@@ -5,7 +5,7 @@
     background-image: linear-gradient(to top right, #ffffff66, #cc1616);
     opacity: 1;
     border-top: 1px solid rgb(255, 0, 0, 0.2);
-    border-bottom:1px solid rgb(255, 0, 0, 0.2);
+    border-bottom: 1px solid rgb(255, 0, 0, 0.2);
 }
 
 .movie-details {
@@ -45,13 +45,13 @@
     flex-direction: column;
     margin-bottom: 10rem;
 }
-.li-info{
+
+.li-info {
     width: 47%;
     word-wrap: break-word;
-    padding-bottom:5px;
+    padding-bottom: 5px;
     margin: 0;
     /* border:1px solid red; */
-
 }
 
 .movie-info>h5 {
@@ -76,4 +76,38 @@
     position: absolute;
     top: 3rem;
     right: 0;
+}
+
+.deletePage {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-self: center;
+}
+
+.deletePage>img {
+    display: flex;
+    float: left;
+    margin: 3rem;
+    justify-content: center;
+    align-self: center;
+}
+
+.deletePage>div {
+    display: inline-block;
+    justify-content: center;
+    align-self: center;
+}
+
+.deletePage button {
+    margin: 0 auto;
+    justify-content: center;
+    align-self: center;
+    height: 40px;
+    width: auto;
+    white-space: nowrap;
+    background: #cc1616;
+    border: 1px solid #cc1616;
+    border-radius: 5%;
+    color: #fff;
 }
