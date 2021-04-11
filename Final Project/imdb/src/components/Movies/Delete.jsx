@@ -37,7 +37,7 @@ class Delete extends Component {
                 <div>
                     <h2>Title: {this.state.movie.title}</h2>
                     <h2>Comments: {this.state.movie.comments ? this.state.movie.comments.length : ''}</h2>
-                    <button className='' onClick={(e) => this.handleSubmit(e)}>Delete This Movie</button>
+                    <button  onClick={(e) => this.handleSubmit(e)}>Delete This Movie</button>
                 </div>
             </div>
         );

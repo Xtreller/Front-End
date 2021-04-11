@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import '../../style/Comments.css'
 
 class Comments extends Component {
@@ -49,13 +50,18 @@ class Comments extends Component {
     }
     componentDidMount = () => this.getComments();
     render() {
+        console.log(localStorage.getItem('blocked'))
         return (
             <div className="comment-container">
-                <form onSubmit={this.addComment}>
-                    {<label className='err' htmlFor="comment-input">{this.state.err}</label>}
-                    <input type='text' className="comment-input" data-name="comment" onChange={this.handleChange} />
-                    <button className="comment-btn" type="submit">Post Comment</button>
-                </form>
+                {localStorage.getItem('blocked') ?
+                    <form onSubmit={this.addComment}>
+                        {<label className='err' htmlFor="comment-input">{this.state.err}</label>}
+                        <input type='text' className="comment-input" data-name="comment" onChange={this.handleChange} />
+                        <button className="comment-btn" type="submit">Post Comment</button>
+                    </form> : <span className='blocked'>
+                        You can't comment because you have been blocked by the Admins of this site. For more information {<Link to={'/Contacts'}> Contact us</Link>}
+                    </span>
+                }
                 <ul>
                     {this.state.comments !== [] ? this.state.comments.reverse().slice(0, 7).map((cmnt, idx) => <li className="comment-li" key={idx}>{cmnt}</li>) : "Be the first to comment!"}
                 </ul>

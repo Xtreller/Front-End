@@ -1,0 +1,31 @@
+.contact-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    width: 100%;
+    height: auto;
+}
+
+.contact-form label {
+    display: block;
+    padding: 0.5rem;
+    margin: 0 auto;
+}
+
+.contact-form>* {
+    padding-top: 1.5rem;
+}
+
+.contact-form button {
+    margin: 0 auto;
+    justify-content: center;
+    align-self: center;
+    height: 40px;
+    width: auto;
+    white-space: nowrap;
+    background: #cc1616;
+    border: 1px solid #cc1616;
+    border-radius: 5%;
+    color: #fff;
+}

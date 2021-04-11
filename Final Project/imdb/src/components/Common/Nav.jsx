@@ -10,7 +10,9 @@ class Nav extends Component {
         this.logout = this.logout.bind(this);
     }
     logout() {
-
+        fetch('http://localhost:5000/auth/user/_logout')
+        .then(res=>res.json())
+        .then(res=>console.log(res.success?'Logged out!':'There was an error!'))
         localStorage.clear();
         this.props.history.push('/')
     }
@@ -35,7 +37,7 @@ class Nav extends Component {
                             <li className="active"><Link to="/">Home</Link></li>
                             <li className="active"><Link to="/movies">Catalogue</Link></li>
                             <li className="active"><Link to="/contacts">Contacts</Link></li>
-                            <li className="active"><Link to="/about">About</Link></li>
+                            {/* <li className="active"><Link to="/about">About</Link></li> */}
                             {userEmail && <li className="active"><Link to="/users">{userEmail}</Link></li>}
                             {userEmail && <li className="active"><Link to="#" onClick={() => this.logout()}>Logout</Link></li>}
                             {!userEmail && <li className="active"><Link to="/login">Login</Link></li>}

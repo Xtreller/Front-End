@@ -6,6 +6,7 @@ import Register from './components/User/Register';
 import Login from './components/User/Login';
 import AdminPage from './components/User/AdminPage';
 import Welcome from './components/Common/Welcome';
+import Contacts from './components/Common/Contacts';
 import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
 import EditMovie from './components/Movies/EditMovie';
@@ -36,6 +37,7 @@ class App extends Component {
           <Route path='/' exact component={Welcome} />
           <Route path='/register' component={Register} />
           <Route path='/login' render={() => <Login history={this.props.history} auth={this.auth} />} />
+          <Route path='/Contacts' component={Contacts} />
           <Route path='/Details/:movieid' component={Details} />
           <Route path='/editMovie/:movieid' component={EditMovie} />
           <ProtectedRoute path='/addMovie' component={AddMovies} />
