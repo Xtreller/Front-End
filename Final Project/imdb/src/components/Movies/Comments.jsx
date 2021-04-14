@@ -1,73 +1,43 @@
-import React, { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../../style/Comments.css'
 
-class Comments extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            comments: [],
-            newComment: ''
-        }
-        this.addComment = this.addComment.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+const FnComment = props => {
+    const [comment, setComment] = useState();
+    const [err, setError] = useState('');
+    const [comments, setComments] = useState(props.comments ? props.comments.reverse() : [])
+    useEffect(() => {
+        setComments(props.comments ? props.comments.reverse().slice(0,7) : []);
+    }, [props.comments])
+    const handleSubmit = e => {
 
-    }
-    getComments() {
-        const movieid = this.props.movieid;
-        fetch('http://localhost:5000/catalogue/movie/comments/' + movieid)
-            .then(data => data.json())
-            .then(res => this.setState({ comments: res.comments }))
-            .catch(err => console.log(err))
-    }
-    handleChange(e) {
-        const field = e.target.dataset.name || e.target.name;
-        const value = e.target.value;
-        const newComment = {};
-        newComment[field] = value;
-        this.setState({ newComment, err: "" })
-    }
-    addComment(e) {
         e.preventDefault();
-        const movieid = this.props.movieid;
-        if (!this.state.newComment) {
-            return this.setState({ err: 'Comment cant be empty!' })
+        if (!comment) {
+            setError('Field cannot be empty!')
+            return
         }
-        else {
-            fetch('http://localhost:5000/catalogue/movie/addComment/' + movieid, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(this.state.newComment),
-            })
-                .then(res => res.json())
-                .then(res => this.setState({ comments: res.comments }))
-                .catch(err => console.log(err));
-        }
-        this.setState({ newComment: '' });
-        document.getElementsByTagName('input')[0].value = ""
+        props.addComment(comment)
+        document.getElementsByTagName('input')[0].value = "";
+        setComment('');
+        setError('')
+        console.log(props.comments.reverse().slice(0, 7))
     }
-    componentDidMount = () => this.getComments();
-    render() {
-        console.log(localStorage.getItem('blocked'))
-        return (
-            <div className="comment-container">
-                {localStorage.getItem('blocked') ?
-                    <form onSubmit={this.addComment}>
-                        {<label className='err' htmlFor="comment-input">{this.state.err}</label>}
-                        <input type='text' className="comment-input" data-name="comment" onChange={this.handleChange} />
-                        <button className="comment-btn" type="submit">Post Comment</button>
-                    </form> : <span className='blocked'>
-                        You can't comment because you have been blocked by the Admins of this site. For more information {<Link to={'/Contacts'}> Contact us</Link>}
-                    </span>
-                }
-                <ul>
-                    {this.state.comments !== [] ? this.state.comments.reverse().slice(0, 7).map((cmnt, idx) => <li className="comment-li" key={idx}>{cmnt}</li>) : "Be the first to comment!"}
-                </ul>
-            </div>
-        );
-    }
+    return (
+        <div className="comment-container">
+            {localStorage.getItem('blocked') ?
+                <form onSubmit={e => handleSubmit(e)}>
+                    {<label className='err' htmlFor="comment-input">{err}</label>}
+                    <input type='text' className="comment-input" data-name="comment" onChange={e => setComment(e.target.value)} />
+                    <button className="comment-btn" type="submit">Post Comment</button>
+                </form> : <span className='blocked'>
+                    You can't comment because you have been blocked by the Admins of this site. For more information {<Link to={'/Contacts'}> Contact us</Link>}
+                </span>
+            }
+            <ul>
+                {comments ? comments.map((cmnt, idx) => <li className="comment-li" key={idx}>{cmnt}</li>) : "Be the first to comment!"}
+                <li>view all: {comments ? comments.length : 0}</li>
+            </ul>
+        </div>
+    );
 }
-
-export default Comments;
+export default FnComment;

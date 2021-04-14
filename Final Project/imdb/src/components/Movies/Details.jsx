@@ -1,6 +1,8 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Route } from "react-router-dom";
 import Comments from './Comments';
+import FnEditMovie from './FnEditMovie';
+import ProtectedRoute from '../Common/ProtectedRoute'
 import Carousel from './Carousel';
 
 import '../../style/MovieDetails.css'
@@ -11,7 +13,7 @@ class Details extends Component {
         this.state = {
             movie: {}
         }
-
+        this.addComment = this.addComment.bind(this);
     }
     getMovie() {
         const movieid = this.props.match.params.movieid;
@@ -20,18 +22,42 @@ class Details extends Component {
             .then(res => this.setState({ movie: res.movie }))
             .catch(err => console.log(err))
     }
-    componentDidMount = () => this.getMovie()
+    addComment(newComment) {
+        const movieid = this.state.movie._id;
+
+        if (!newComment) {
+            return { err: 'Comment cant be empty!' }
+        }
+        else {
+            console.log(newComment)
+            fetch('http://localhost:5000/catalogue/movie/addComment/' + movieid, {
+                mode: 'no-cors',
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(newComment),
+            })
+                .then(() => this.getMovie())
+                .catch(err => console.log(err));
+        }
+    }
+    componentDidMount = () => this.getMovie();
 
     render() {
-        let { title, image, actors, genre, description, producers, carouselImages } = this.state.movie;
-        if (actors && genre) {
+        let { title, image, actors, genre, description, producers, carouselImages, comments } = this.state.movie;
+        if (actors && genre && comments) {
             actors = actors.join(', ');
-            genre = genre.join(', ')
+            genre = genre.join(', ');
+            comments.reverse();
         }
+
+        console.log(this.state.movie._id)
         return (
             <div>
                 {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/editMovie/${this.props.match.params.movieid}` }}>Edit Movie</Link></span> : ''}
                 {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/deleteMovie/${this.state.movie._id}` }}>Delete Movie</Link></span> : ''}
+                <ProtectedRoute path={"/editMovie/" + this.state.movie._id} component={() => <FnEditMovie />}></ProtectedRoute>
 
                 <div className="details-container">
                     <div className="carousel">
@@ -53,8 +79,8 @@ class Details extends Component {
                         </div>
                     </div>
                 </div>
-                <Comments movieid={this.props.match.params.movieid} ></Comments>
-            </div>
+                <Comments movieid={this.props.match.params.movieid} comments={comments} addComment={this.addComment}></Comments>
+            </div >
         )
     }
 }

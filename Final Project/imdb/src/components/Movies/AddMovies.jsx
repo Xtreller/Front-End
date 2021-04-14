@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 
 class AddMovie extends Component {
     constructor(props) {
@@ -53,13 +53,14 @@ class AddMovie extends Component {
             .then(console.log())
     }
 
+    
     render() {
         return (
             <form >
                 <h1>Add Movie</h1>
                 {this.state.err ?
                     this.state.err.map((m,idx )=>
-                        <label  key={idx} className='err' htmlFor="comment-input">{m}</label>) : 'Loading...'}
+                        <label  key={idx} className='err' htmlFor="comment-input">{m}</label>) : ''}
                 <div className="form-group" >
                     <label htmlFor="title">Title</label><br />
                     <input data-name="title" onChange={this.handleChange} type="text" className="form-control" id="title" aria-describedby="titlelHelp" />

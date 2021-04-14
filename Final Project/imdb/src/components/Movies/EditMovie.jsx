@@ -1,106 +1,76 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { withRouter } from 'react-router-dom';
 
-class EditMovie extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            updated: false,
-            movie: {}
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    getMovie() {
-        const movieid = this.props.match.params.movieid;
-        fetch('http://localhost:5000/catalogue/movies/' + movieid)
+const EditMovie = (props) => {
+    const [movie, setMovie] = useState({});
+    useEffect(() => {
+        console.log(updated)
+        fetch('http://localhost:5000/catalogue/movies/' + props.id)
             .then(data => data.json())
-            .then(res => this.setState({ movie: res.movie }))
+            .then(res => { setMovie(res.movie); setUpdated(res.movie) })
+            .then(console.log(movie, updated))
             .catch(err => console.log(err))
-    }
-    componentDidMount = () => this.getMovie()
-    handleChange(e) {
-        const arrayFields = ["carouselImages", "actors", "genre"]
-        const field = e.target.dataset.name || e.target.name;
-        const value = e.target.value;
-        const newMovie = {};
-        newMovie[field] = value;
-        if (arrayFields.includes(field)) {
-            newMovie[field] = value.split(', ');
-        }
-        this.setState({
-            movie: Object.assign(this.state.movie, newMovie)
-        })
-    }
-    handleSubmit(e) {
-        e.preventDefault();
-        const movieid = this.props.match.params.movieid;
+        console.log(updated)
+    }, [])
+    const [updated, setUpdated] = useState(movie);
 
-        if (this.state.updated) {
-            fetch('http://localhost:5000/catalogue/edit/' + movieid, {
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(updated);
+        if (updated !== movie) {
+            fetch('http://localhost:5000/catalogue/edit/' + props.id, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(this.state.movie),
+                body: JSON.stringify(updated),
             })
-                .then(res => res.json())
                 .then(
-                    this.props.history.push('/Details/' + movieid)
+                    props.history.push('/Details/' + props.id)
                 )
                 .catch(err => console.log(err))
         }
     }
-    componentDidUpdate(_, prevState) {
-        if (prevState.movie !== this.state.movie) {
-            this.setState({ updated: true })
-        }
-    }
+    return (
+        <form >
+            <h1>Edit Movie</h1>
+            <div className="form-group" >
+                <label htmlFor="title">Title</label><br />
+                <input data-name="title" onChange={e => setUpdated(prev =>({ ...prev, title: e.target.value }))} type="text" className="form-control" id="title" aria-describedby="titlelHelp" defaultValue={movie.title} />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="imageFrontCover">Front Cover</label><br />
+                <input data-name="image" onChange={e => setUpdated(prev => ({ ...prev, image: e.target.value }))} type="text" className="form-control" id="imageFrontCover" defaultValue={movie.image} />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="carouselImages">Carousel</label><br />
+                <input data-name="carouselImages" onChange={e => setUpdated(prev => ({ ...prev, carouselImages: e.target.value }))} type="text" className="form-control" id="imageCarousel" defaultValue={movie.carouselImages ? movie.carouselImages.join(', ') : ''} />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="genre">Genre</label><br />
+                <input data-name="genre" onChange={e => setUpdated(prev => ({ ...prev, genre: e.target.value }))} type="text" className="form-control" id="imageCarousel" defaultValue={movie.genre ? movie.genre.join(', ') : ""} />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="producer">Producer/s</label><br />
+                <input data-name="producers" onChange={e => setUpdated(prev => ({ ...prev, producers: e.target.value }))} type="text" className="form-control" id="producers" defaultValue={movie.producers} />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="actors">Actors</label><br />
+                <textarea data-name="actors" onChange={e => setUpdated(prev => ({ ...prev, actors: e.target.value }))} type="text" className="form-control" id="actors" defaultValue={movie.actors} ></textarea>
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="description">Description</label><br />
+                <textarea data-name="description" onChange={e => setMovie(prev => ({ ...prev, description: e.target.value }))} type="text" className="form-control" id="description" defaultValue={movie.description} ></textarea>
+            </div>
+            <button onClick={e => handleSubmit(e)} type="button" className="btn-submit">Submit Changes</button>
 
-    render() {
-        console.log(this.state.movie.description)
-
-        return (
-            <form >
-                <h1>Edit Movie</h1>
-                <div className="form-group" >
-                    <label htmlFor="title">Title</label><br />
-                    <input data-name="title" onChange={this.handleChange} type="text" className="form-control" id="title" aria-describedby="titlelHelp" value={this.state.movie.title} />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="imageFrontCover">Front Cover</label><br />
-                    <input data-name="image" onChange={this.handleChange} type="text" className="form-control" id="imageFrontCover" value={this.state.movie.image} />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="carouselImages">Carousel</label><br />
-                    <input data-name="carouselImages" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" value={this.state.movie.carouselImages ? this.state.movie.carouselImages.join(', ') : 'Loading...'} />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="genre">Genre</label><br />
-                    <input data-name="genre" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" value={this.state.movie.genre ? this.state.movie.genre.join(', ') : "Loading..."} />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="producer">Producer/s</label><br />
-                    <input data-name="producers" onChange={this.handleChange} type="text" className="form-control" id="producers" defaultValue={this.state.movie.producers} />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="actors">Actors</label><br />
-                    <textarea data-name="actors" onChange={this.handleChange} type="text" className="form-control" id="actors" defaultValue={this.state.movie.actors} ></textarea>
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="description">Description</label><br />
-                    <textarea data-name="description" onChange={this.handleChange} type="text" className="form-control" id="description" defaultValue={this.state.movie.description} ></textarea>
-                </div>
-                <button onClick={this.handleSubmit} type="button" className="btn-submit">Submit Changes</button>
-
-            </form>
-        )
-    }
+        </form>
+    )
 }
 export default withRouter(EditMovie)

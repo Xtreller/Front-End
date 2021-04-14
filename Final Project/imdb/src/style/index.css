@@ -597,7 +597,7 @@ footer>a {
 
 .btn-secondary {
   display: inherit;
-  margin-top: 3rem;
+  margin: 1.25rem;
   justify-content: center;
   color: #fff;
   text-align: center;

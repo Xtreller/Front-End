@@ -9,7 +9,7 @@ import Welcome from './components/Common/Welcome';
 import Contacts from './components/Common/Contacts';
 import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
-import EditMovie from './components/Movies/EditMovie';
+import FnEditMovie from './components/Movies/FnEditMovie';
 import DeleteMovie from './components/Movies/Delete';
 import Details from './components/Movies/Details';
 import Nav from './components/Common/Nav';
@@ -39,7 +39,7 @@ class App extends Component {
           <Route path='/login' render={() => <Login history={this.props.history} auth={this.auth} />} />
           <Route path='/Contacts' component={Contacts} />
           <Route path='/Details/:movieid' component={Details} />
-          <Route path='/editMovie/:movieid' component={EditMovie} />
+          <ProtectedRoute path='/editMovie/:movieid' component={FnEditMovie} />
           <ProtectedRoute path='/addMovie' component={AddMovies} />
           <ProtectedRoute path='/movies' component={Catalogue} isAuth={localStorage.getItem('token')} />
           <ProtectedRoute path='/deleteMovie/:movieid' component={DeleteMovie} isAuth={localStorage.getItem('token')} />
