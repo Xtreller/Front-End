@@ -5,7 +5,7 @@ const userModel = require('../models/user');
 const reportModel = require('../models/reports');
 const config = require('../config/config')
 const verifyJwt = require('../middleware/auth-check');
-const transporter = require('../middleware/email-sender');
+// const transporter = require('../middleware/email-sender');
 
 const router = new express.Router()
 

@@ -2,7 +2,15 @@ const express = require('express')
 const router = new express.Router()
 
 const movieModel = require('../models/movie');
+router.get('/movies', (req, res, next) => {
+    console.log('getting')
+    movieModel.find({})
+        .then(movies => {
+            return res.status(200).json({ moviesCollection: movies })
+        })
+        .catch(err => console.log(err))
 
+})
 router.post('/create', (req, res, next) => {
     let result = {
         success: true,
@@ -14,10 +22,10 @@ router.post('/create', (req, res, next) => {
         'adventure', 'criminal', 'mystery',
         'fantasy', 'sports', 'action',
         'comedy', 'animation', 'anime']
-
-    if (!genres.includes(genre)) {
+    console.log('genre', !genres.includes(genre), genre.toString())
+    if (!genres.includes(genre.toString())) {
         result.success = false;
-        result.message.push('The possible genres are: \n' + genres.join(', ') + '\n')
+        result.message.push('The possible genres are: ' + genres.join(', '))
     }
     movieModel.exists({ title: title })
         .then(exists => {
@@ -28,7 +36,6 @@ router.post('/create', (req, res, next) => {
                 console.log('title:', result);
             }
         })
-        .then(res => console.log('here', res))
         .catch(err => console.log(err))
     movieModel.exists({ image: image })
         .then(exists => {
@@ -36,7 +43,6 @@ router.post('/create', (req, res, next) => {
                 result.success = false;
                 result.message.push('Movie with this cover image already exists! \n');
             }
-            console.log('image', result);
         })
     // .then(() => res.json(result))
     if (result.success === false) {
@@ -49,20 +55,20 @@ router.post('/create', (req, res, next) => {
             .then(res => console.log(res))
             .then(res.redirect('/catalogue/movies'))
             .catch(err => console.log(err))
-        return res.status(200).json(Movies.retriveMovies());
     }
 
 })
 router.post('/edit/:movieid', (req, res, next) => {
     console.log('Updating...')
     const { title, image, carouselImages, description, actors, producers, genre } = req.body;
+    console.log(req.body)
     movieModel
         .updateOne(
             { _id: req.params.movieid },
             { title, image, carouselImages, description, actors, producers, genre })
         .then(res => console.log(res))
         .catch(err => console.log(err))
-    return res.status(200).json(Movies.retriveMovies());
+    return res.redirect('/catalogue/movies');
 
 })
 router.post('/clean', (req, res, next) => {
@@ -72,15 +78,7 @@ router.post('/clean', (req, res, next) => {
 
 })
 
-router.get('/movies', (req, res, next) => {
-    console.log('getting')
-    movieModel.find({})
-        .then(movies => {
-            return res.status(200).json({ moviesCollection: movies })
-        })
-        .catch(err => console.log(err))
 
-})
 router.get('/movies/:movieid', (req, res, next) => {
     const movieid = req.params.movieid;
     console.log(movieid);
@@ -98,13 +96,14 @@ router.get('/movie/comments/:movieid', (req, res, next) => {
 router.post('/movie/delete/:movieid', (req, res, next) => {
     const movieid = req.params.movieid;
     movieModel.deleteOne({ _id: movieid })
-        .then(res=>console.log(res))
+        .then(res => console.log(res))
         .catch(err => console.log(err));
 })
 router.post('/movie/addComment/:movieid', (req, res, next) => {
     const movieid = req.params.movieid;
-    const comment = req.body.comment;
-    console.log('movie id: ', movieid)
+    const comment = req.body.slice(1, req.body.length - 1);
+
+    console.log('movie id: ', comment.toString())
     if (comment) {
         movieModel.updateOne(
             { _id: movieid },
@@ -115,7 +114,9 @@ router.post('/movie/addComment/:movieid', (req, res, next) => {
                 }
                 done
             }
-        ).then(res.redirect('/catalogue/movie/comments/' + movieid));
+        )
+            .then(res.redirect('/catalogue/movie/comments/' + movieid));
+        // .then(console.log)
     }
 })
 

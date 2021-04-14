@@ -3,13 +3,13 @@ const nodemailer = require('nodemailer');
 let testAccount = nodemailer.createTestAccount();
 
 const transporter = nodemailer.createTransport({
-    host: "smtp.ethereal.email",
-    port: 587,
-    secure: false,
-    auth: {
-      user: testAccount.user,
-      pass: testAccount.pass
-    }
+    // host: "smtp.ethereal.email",
+    // port: 587,
+    // secure: false,
+    // auth: {
+    //     user: testAccount.user,
+    //     pass: testAccount.pass
+    // }
 });
 transporter.verify((error, success) => {
     if (error) {
