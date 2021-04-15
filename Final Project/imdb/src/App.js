@@ -9,7 +9,7 @@ import Welcome from './components/Common/Welcome';
 import Contacts from './components/Common/Contacts';
 import Catalogue from './components/Movies/Catalogue';
 import AddMovies from './components/Movies/AddMovies';
-import FnEditMovie from './components/Movies/FnEditMovie';
+import FnEditMovie from './components/Movies/EditMovie';
 import DeleteMovie from './components/Movies/Delete';
 import Details from './components/Movies/Details';
 import Nav from './components/Common/Nav';

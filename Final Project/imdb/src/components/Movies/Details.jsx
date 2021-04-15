@@ -1,8 +1,6 @@
 import React, { Component } from "react";
-import { Link, Route } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Comments from './Comments';
-import FnEditMovie from './FnEditMovie';
-import ProtectedRoute from '../Common/ProtectedRoute'
 import Carousel from './Carousel';
 
 import '../../style/MovieDetails.css'
@@ -57,7 +55,6 @@ class Details extends Component {
             <div>
                 {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/editMovie/${this.props.match.params.movieid}` }}>Edit Movie</Link></span> : ''}
                 {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/deleteMovie/${this.state.movie._id}` }}>Delete Movie</Link></span> : ''}
-                <ProtectedRoute path={"/editMovie/" + this.state.movie._id} component={() => <FnEditMovie />}></ProtectedRoute>
 
                 <div className="details-container">
                     <div className="carousel">

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router';
 import { Route, withRouter } from 'react-router-dom';
 import AdminPage from '../User/AdminPage';
 import AddMovies from '../Movies/AddMovies';
-import FnEditMovie from '../Movies/FnEditMovie';
+import EditMovie from '../Movies/EditMovie';
 import Delete from '../Movies/Delete';
 
 
@@ -24,7 +24,7 @@ function ProtectedRoute({ userRole, isAuth, component: Component, ...rest }) {
                         return <Component />
                     }
                 }
-                if (Component === Delete || Component === FnEditMovie) {
+                if (Component === Delete || Component === EditMovie) {
                     let movieid = rest.location.pathname.split('/')[rest.location.pathname.split('/').length - 1]
                     console.log(movieid)
                     if (localStorage.getItem('userRole') !== 'admin') {

@@ -4,13 +4,10 @@ import { withRouter } from 'react-router-dom';
 const EditMovie = (props) => {
     const [movie, setMovie] = useState({});
     useEffect(() => {
-        console.log(updated)
         fetch('http://localhost:5000/catalogue/movies/' + props.id)
             .then(data => data.json())
             .then(res => { setMovie(res.movie); setUpdated(res.movie) })
-            .then(console.log(movie, updated))
             .catch(err => console.log(err))
-        console.log(updated)
     }, [])
     const [updated, setUpdated] = useState(movie);
 

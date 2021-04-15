@@ -100,7 +100,7 @@ Used Technologies:
 Project Uses Description:
  My-IMDB is a project for Uploading and reviewing Movies.
  Every Register User can see the list of movies, its Details , and a comment under the movie,
- Every Admin User can Add Movie , Block User , Make User Admin or remove it as Admin plus User actions.
+ Every Admin User can Add Movie,Delete Movie , Block User , Make User Admin or remove it as Admin plus User actions.
  
  Paths for Adding movie and admin actions(block, make admin ) are protected, only available for admins.
  Users have access to Seeing the list of movies, commenting each movie, and seeing its details and other user's reviews.

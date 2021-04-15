@@ -1,16 +1,11 @@
-import React, { Component } from 'react';
-import { Route, withRouter } from 'react-router-dom'
+import { useState } from 'react';
+import { withRouter } from 'react-router-dom'
 
-class AddMovie extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            movie: {}
-        }
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-    handleChange(e) {
+const AddMovie = props => {
+
+    const [movie, setMovie] = useState({});
+    const [err, setError] = useState([]);
+    const handleChange = e => {
         const arrayFields = ["carouselImages", "actors", "genre"]
         const field = e.target.dataset.name || e.target.name;
         const value = e.target.value;
@@ -19,17 +14,15 @@ class AddMovie extends Component {
         if (arrayFields.includes(field)) {
             newMovie[field] = value.trim().split(', ');
         }
-        this.setState({
-            movie: Object.assign(this.state.movie, newMovie)
-        })
+        setMovie(prev => Object.assign(prev, newMovie))
     }
-    handleSubmit(e) {
+    const handleSubmit = e => {
         e.preventDefault();
-        console.log(this.state.movie)
-        const { title, image, carouselImages, genre, producers, actors, description } = this.state.movie;
-
+        const { title, image, carouselImages, genre, producers, actors, description } = movie;
+        console.log(movie)
         if (!title || !image || !carouselImages || !genre || !producers || !actors || !description) {
-            this.setState({ err: 'Fields cannot be empty!' })
+            setError(prev =>['Fields cannot be empty!'])
+            console.log(err)
             return;
         }
         fetch('http://localhost:5000/catalogue/create', {
@@ -37,71 +30,69 @@ class AddMovie extends Component {
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(this.state.movie),
+            body: JSON.stringify(movie),
         })
             .then(res => res.json())
             .then(res => {
                 console.log(res)
                 if (!res.success) {
-                    this.setState({ err: res.message })
+                    setError(prev => prev.err = res.message)
                     return;
                 }
-                this.props.history.push('/movies')
+                props.history.push('/movies')
             }
 
             )
             .then(console.log())
     }
 
-    
-    render() {
-        return (
-            <form >
-                <h1>Add Movie</h1>
-                {this.state.err ?
-                    this.state.err.map((m,idx )=>
-                        <label  key={idx} className='err' htmlFor="comment-input">{m}</label>) : ''}
-                <div className="form-group" >
-                    <label htmlFor="title">Title</label><br />
-                    <input data-name="title" onChange={this.handleChange} type="text" className="form-control" id="title" aria-describedby="titlelHelp" />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="imageFrontCover">Front Cover</label><br />
-                    <input data-name="image" onChange={this.handleChange} type="text" className="form-control" id="imageFrontCover" aria-describedby="imageFrontCoverHelp" />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="carouselImages">Carousel</label><br />
-                    <input data-name="carouselImages" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="genre">Genre</label><br />
-                    <input data-name="genre" onChange={this.handleChange} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="producer">Producer/s</label><br />
-                    <textarea data-name="producers" onChange={this.handleChange} type="text" className="form-control" id="producers" aria-describedby="produecersHelp" />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="description">Description</label><br />
-                    <textarea name="description" onChange={this.handleChange} type="text" className="form-control" id="description" aria-describedby="descriptionHelp" />
-                </div>
-                <br />
-                <div className="form-group" >
-                    <label htmlFor="actors">Actors</label><br />
-                    <textarea data-name="actors" onChange={this.handleChange} type="text" className="form-control" id="producers" aria-describedby="produecersHelp" />
-                </div>
-                <br />
+    return (
+        <form >
+            <h1>Add Movie</h1>
+            {err ?
+                err.map((m, idx) =>
+                    <label key={idx} className='err' htmlFor="comment-input">{m}</label>) : ''}
+            <div className="form-group" >
+                <label htmlFor="title">Title</label><br />
+                <input data-name="title" onChange={e => handleChange(e)} type="text" className="form-control" id="title" aria-describedby="titlelHelp" />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="imageFrontCover">Front Cover</label><br />
+                <input data-name="image" onChange={e => handleChange(e)} type="text" className="form-control" id="imageFrontCover" aria-describedby="imageFrontCoverHelp" />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="carouselImages">Carousel</label><br />
+                <input data-name="carouselImages" onChange={e => handleChange(e)} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="genre">Genre</label><br />
+                <input data-name="genre" onChange={e => handleChange(e)} type="text" className="form-control" id="imageCarousel" aria-describedby="imageCarouselHelp" />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="producer">Producer/s</label><br />
+                <textarea data-name="producers" onChange={e => handleChange(e)} type="text" className="form-control" id="producers" aria-describedby="produecersHelp" />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="description">Description</label><br />
+                <textarea name="description" onChange={e => handleChange(e)} type="text" className="form-control" id="description" aria-describedby="descriptionHelp" />
+            </div>
+            <br />
+            <div className="form-group" >
+                <label htmlFor="actors">Actors</label><br />
+                <textarea data-name="actors" onChange={e => handleChange(e)} type="text" className="form-control" id="producers" aria-describedby="produecersHelp" />
+            </div>
+            <br />
 
-                <br />
-                <button onClick={this.handleSubmit} type="button" className="btn-submit">Submit Movie</button>
+            <br />
+            <button onClick={e => handleSubmit(e)} type="button" className="btn-submit">Submit Movie</button>
 
-            </form>
-        )
-    }
+        </form>
+    )
+
 }
 export default withRouter(AddMovie)
