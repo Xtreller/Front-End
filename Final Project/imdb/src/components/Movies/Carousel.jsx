@@ -1,60 +1,64 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect, useState } from 'react';
 import '../../style/Carousel.css'
-import leftarrow from '../../img/left-arrow.png'
+import arrow from '../../img/left-arrow.png'
+import 'react-transition-group'; // ES6
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-export default class Slider extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            imageidx: 0,
-            images: []
-        }
-    }
+const Slider = props => {
 
-    changeImage(id) {
-        const maxcnt = this.props.images.length
-        if (this.state.imageidx + id > maxcnt) {
-            this.setState(({ imageidx: this.props.images.length - 3 }))
+    const [images, setImages] = useState([]);
+    const [imageidx, setImageIdx] = useState(0);
+
+    useEffect(() => {
+        setImages(props.images);
+    })
+    const changeImage = id => {
+        const maxcnt = images.length
+        console.log(id)
+        if (imageidx + id > maxcnt) {
+            setImageIdx(maxcnt - 3)
         }
-        if (this.state.imageidx - id <= 0) {
-            this.setState(({ imageidx: 0 }))
+        if (imageidx - id <= 0) {
+            setImageIdx(0)
         }
         else {
-            this.setState(({ imageidx: this.props.images.length - 3 }))
+            setImageIdx(maxcnt - 3)
         }
 
     }
-    componentDidMount = () => this.setState({ images: this.props.images })
 
-    render() {
-        if (this.props.images) {
-            return (
-                <div className="slider">,
-                    {this.props.images.length > 3 ? <img
-                        className="arrow-btn-previous"
-                        src={leftarrow}
-                        title="previous"
-                        alt="nav"
-                        onClick={() => this.changeImage(this.state.imageidx - 1)}
+    if (images) {
+        return (
+            <div className="slider">,
+                {images.length > 3 ? <img
+                    className="arrow-btn-previous"
+                    src={arrow}
+                    title="previous"
+                    alt="nav"
+                    onClick={() => changeImage(imageidx + 1)}
+                /> : ""
+                }
+                <div className="image-container">
+                    {images.slice(imageidx, imageidx + 3).map((image, indx) =>
+                        <img src={image} className="slider-image" alt="episode" />
 
-                    /> : ""
-                    }
-                    <div className="image-container">
-                        {this.props.images.slice(this.state.imageidx, this.state.imageidx + 3).map((image, indx) => <img key={indx} src={image} className="slider-image" alt="episode" />)}
-                    </div>
-                    {this.props.images.length > 3 ? <img
-                        className="arrow-btn-next"
-                        src={leftarrow}
-                        title="previous"
-                        alt="nav"
-                        onClick={() => this.changeImage(this.state.imageidx + 1)}
-                    /> : ""
-                    }
+                    )}
                 </div>
-            )
-        }
-        else{
-            return 'Loading...'
-        }
+                {
+                    images.length > 3 ? <img
+                        className="arrow-btn-next"
+                        src={arrow}
+                        title="previous"
+                        alt="nav"
+                        onClick={() => changeImage(imageidx - 1)}
+                    /> : ""
+                }
+            </div >
+        )
     }
+    else {
+        return 'Loading...'
+    }
+
 }
+export default Slider;

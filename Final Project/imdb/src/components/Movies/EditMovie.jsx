@@ -1,8 +1,13 @@
 import { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
+import Validate from '../../services/validation';
+import useFetch from '../../hooks/useFetch';
 
 const EditMovie = (props) => {
     const [movie, setMovie] = useState({});
+    const [err, setError] = useState([]);
+    
+    // const [movie, updated] = useFetch('http://localhost:5000/catalogue/movies/');
     useEffect(() => {
         fetch('http://localhost:5000/catalogue/movies/' + props.id)
             .then(data => data.json())
@@ -13,7 +18,11 @@ const EditMovie = (props) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(updated);
+
+        setError(prev => prev = [Validate.FormIsNotEmpty(updated)]);
+
+        console.log(err);
+
         if (updated !== movie) {
             fetch('http://localhost:5000/catalogue/edit/' + props.id, {
                 method: 'POST',
@@ -22,9 +31,7 @@ const EditMovie = (props) => {
                 },
                 body: JSON.stringify(updated),
             })
-                .then(
-                    props.history.push('/Details/' + props.id)
-                )
+                .then(props.history.push('/Details/' + props.id))
                 .catch(err => console.log(err))
         }
     }
@@ -33,7 +40,7 @@ const EditMovie = (props) => {
             <h1>Edit Movie</h1>
             <div className="form-group" >
                 <label htmlFor="title">Title</label><br />
-                <input data-name="title" onChange={e => setUpdated(prev =>({ ...prev, title: e.target.value }))} type="text" className="form-control" id="title" aria-describedby="titlelHelp" defaultValue={movie.title} />
+                <input data-name="title" onChange={e => setUpdated(prev => ({ ...prev, title: e.target.value }))} type="text" className="form-control" id="title" aria-describedby="titlelHelp" defaultValue={movie.title} />
             </div>
             <br />
             <div className="form-group" >

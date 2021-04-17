@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { withRouter } from 'react-router-dom'
+import Validate from '../../services/validation'
 
 const AddMovie = props => {
 
@@ -15,16 +16,15 @@ const AddMovie = props => {
             newMovie[field] = value.trim().split(', ');
         }
         setMovie(prev => Object.assign(prev, newMovie))
+        setError([])
     }
     const handleSubmit = e => {
         e.preventDefault();
-        const { title, image, carouselImages, genre, producers, actors, description } = movie;
-        console.log(movie)
-        if (!title || !image || !carouselImages || !genre || !producers || !actors || !description) {
-            setError(prev =>['Fields cannot be empty!'])
-            console.log(err)
-            return;
+
+        if (Validate.FormIsEmpty(movie)) {
+            setError(prev => prev = ['Fields Cannot be empty']);
         }
+
         fetch('http://localhost:5000/catalogue/create', {
             method: 'POST',
             headers: {
