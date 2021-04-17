@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import { Link } from "react-router-dom"
+import Validate from '../../services/validation';
 
 
 class Register extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            form: {}
+            form: {},
+            err: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,40 +21,44 @@ class Register extends Component {
         this.setState({
             form: Object.assign(this.state.form, newObj)
         })
+        this.setState({err:[]})
     }
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.form)
-        const { name, email, password } = this.state.form;
-        if (!name || !email || !password) {
-
-            return this.setState({ err: 'Fields cannot be empty!' });
+        if (Validate.FormIsEmpty(this.state.form)) {
+            this.setState({ err: ['Fields cannot be empty!'] })
+            return
         }
-        fetch('http://localhost:5000/auth/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(this.state.form),
-        })
-            .then(res => res.json())
-            .then(res => {
-                if (res.result.success) {
-                    this.props.history.push('/login')
-                }
-                else {
-                    console.log(res.result.message)
-                    // res.result.message.map(m => console.log(m))
-                    this.setState({ err: res.result.message })
-                }
+        if (Validate.EmailIsValid(this.state.form.email)) {
+            this.setState({ err: ["You have entered an invalid email address!"] })
+
+        }
+        else {
+            fetch('http://localhost:5000/auth/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(this.state.form),
             })
-            .catch(console.log)
+                .then(res => res.json())
+                .then(res => {
+                    if (res.result.success) {
+                        this.props.history.push('/login')
+                    }
+                    else {
+                        this.setState({ err: res.result.message })
+                    }
+                })
+                .catch(console.log)
+        }
     }
 
     render() {
         return (
             <form >
-                {this.state.err ? this.state.err.split('\n').map(m =>
+                {this.state.err ? this.state.err.map(m =>
                     <label className='err' htmlFor="comment-input">{m}</label>) : ''}
 
                 <h1>Register</h1>

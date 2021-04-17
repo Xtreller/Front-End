@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from "react-router-dom"
+import Validate from '../../services/validation';
 
 
 class Login extends Component {
@@ -23,6 +24,13 @@ class Login extends Component {
     }
     handleSubmit(e) {
         e.preventDefault();
+        if (Validate.FormIsEmpty(this.state.form)) {
+            this.setState({ err: Validate.FormIsNotEmpty(this.state.form) })
+
+        }
+        if (Validate.EmailIsValid(this.state.form.email)) {
+            this.setState({ err: "You have entered an invalid email address!" })
+        }
 
         fetch('http://localhost:5000/auth/login',
             {
@@ -42,7 +50,7 @@ class Login extends Component {
                     localStorage.setItem('userEmail', response.user.email)
                     localStorage.setItem('userRole', response.user.role)
 
-                    localStorage.setItem('blocked',response.user.banned)
+                    localStorage.setItem('blocked', response.user.banned)
                     console.log('success!')
                     this.props.history.push('/movies');
                 }
