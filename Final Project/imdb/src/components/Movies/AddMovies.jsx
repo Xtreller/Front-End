@@ -49,9 +49,9 @@ const AddMovie = props => {
     return (
         <form >
             <h1>Add Movie</h1>
-            {err ?
+            {/* {err ?
                 err.map((m, idx) =>
-                    <label key={idx} className='err' htmlFor="comment-input">{m}</label>) : ''}
+                    <label key={idx} className='err' htmlFor="comment-input">{m}</label>) : ''} */}
             <div className="form-group" >
                 <label htmlFor="title">Title</label><br />
                 <input data-name="title" onChange={e => handleChange(e)} type="text" className="form-control" id="title" aria-describedby="titlelHelp" />

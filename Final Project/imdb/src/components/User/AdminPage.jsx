@@ -14,12 +14,18 @@ class AdminPage extends Component {
     makeAdmin(userid) {
         console.log(userid);
         fetch('http://localhost:5000/auth/makeAdmin/' + userid)
+        .then(data => data.json())
+        .then(users => this.setState({ users: users.userCollection }))
     }
     banUser(userid) {
         console.log(userid);
+        // if (localStorage.getItem('userRole') !== 'admin') {
         fetch('http://localhost:5000/auth/block/' + userid)
             .then(data => data.json())
             .then(users => this.setState({ users: users.userCollection }))
+
+        // }
+
     }
     getUsers() {
         fetch('http://localhost:5000/auth/users', {
@@ -29,15 +35,23 @@ class AdminPage extends Component {
         })
             .then(res => res.json())
             .then(users => this.setState({ users: users.userCollection }))
+            .then(() => {
+                var user = this.state.users.find(u => u.email === localStorage.getItem('userEmail'));
+                localStorage.setItem('blocked', user.banned)
+                // this.props.setUser(user.banned)
+            })
             .catch(err => console.log(err))
+
     }
     componentDidMount = () => this.getUsers();
 
-    componentDidUpdate(_, prevState) {
-        if (prevState.users !== this.state.users) {
-            this.getUsers();
-        }
-    }
+    // componentDidUpdate = (_, prevState) => {
+    //     if (prevState.users.toString() !== this.state.users.toString()) {
+    //         console.log(prevState.users ,this.state.users)
+    //         this.getUsers();
+    //     }
+        
+    // }
 
     render() {
         return (

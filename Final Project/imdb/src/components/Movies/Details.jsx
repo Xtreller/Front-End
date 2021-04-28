@@ -12,6 +12,7 @@ class Details extends Component {
             movie: {}
         }
         this.addComment = this.addComment.bind(this);
+        this.getMovie = this.getMovie.bind(this);
     }
     getMovie() {
         const movieid = this.props.match.params.movieid;
@@ -41,6 +42,11 @@ class Details extends Component {
         }
     }
     componentDidMount = () => this.getMovie();
+    componentDidUpdate = (_, prevState) => {
+        if (prevState.movie === this.state.movie) {
+            this.getMovie();
+        }
+    }
 
     render() {
         let { title, image, actors, genre, description, producers, carouselImages, comments } = this.state.movie;
@@ -50,7 +56,6 @@ class Details extends Component {
             comments.reverse();
         }
 
-        console.log(this.state.movie._id)
         return (
             <div>
                 {localStorage.getItem('userRole') === 'admin' ? <span className="btn-secondary"><Link to={{ pathname: `/editMovie/${this.props.match.params.movieid}` }}>Edit Movie</Link></span> : ''}

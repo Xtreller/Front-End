@@ -486,7 +486,7 @@ section {
 }
 
 .catalogue {
-  width: 80%;
+  width: 70%;
   margin: 3rem auto 20rem;
   display: grid;
   grid-template-columns: auto auto auto auto auto;

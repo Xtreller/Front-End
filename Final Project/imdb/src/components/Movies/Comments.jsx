@@ -7,7 +7,8 @@ const FnComment = props => {
     const [err, setError] = useState('');
     const [comments, setComments] = useState(props.comments ? props.comments.reverse() : [])
     useEffect(() => {
-        setComments(props.comments ? props.comments.reverse().slice(0,7) : []);
+        console.log(localStorage.getItem('blocked'));
+        setComments(props.comments ? props.comments.reverse().slice(0, 7) : []);
     }, [props.comments])
     const handleSubmit = e => {
 
@@ -20,18 +21,17 @@ const FnComment = props => {
         document.getElementsByTagName('input')[0].value = "";
         setComment('');
         setError('')
-        console.log(props.comments.reverse().slice(0, 7))
     }
     return (
         <div className="comment-container">
             {localStorage.getItem('blocked') ?
-                <form onSubmit={e => handleSubmit(e)}>
+                <div className='blocked'>
+                    You can't comment because you have been blocked by the Admins of this site. For more information {<Link to={'/Contacts'}> Contact us</Link>}
+                </div> : <form onSubmit={e => handleSubmit(e)}>
                     {<label className='err' htmlFor="comment-input">{err}</label>}
                     <input type='text' className="comment-input" data-name="comment" onChange={e => setComment(e.target.value)} />
                     <button className="comment-btn" type="submit">Post Comment</button>
-                </form> : <span className='blocked'>
-                    You can't comment because you have been blocked by the Admins of this site. For more information {<Link to={'/Contacts'}> Contact us</Link>}
-                </span>
+                </form>
             }
             <ul>
                 {comments ? comments.map((cmnt, idx) => <li className="comment-li" key={idx}>{cmnt}</li>) : "Be the first to comment!"}

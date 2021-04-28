@@ -7,13 +7,12 @@ import EditMovie from '../Movies/EditMovie';
 import Delete from '../Movies/Delete';
 
 
-function ProtectedRoute({ userRole, isAuth, component: Component, ...rest }) {
+function ProtectedRoute({ userRole, component: Component, ...rest }) {
 
     return (
         <Route {...rest}
             render={props => {
                 if (Component === AdminPage || Component === AddMovies) {
-
                     if (localStorage.getItem('userRole') !== 'admin') {
                         return (<Redirect to={{
                             pathname: '/',
@@ -38,6 +37,7 @@ function ProtectedRoute({ userRole, isAuth, component: Component, ...rest }) {
                     }
                 }
                 else {
+                    const isAuth = localStorage.getItem('token');
                     if (isAuth) {
                         return <Component />
                     }

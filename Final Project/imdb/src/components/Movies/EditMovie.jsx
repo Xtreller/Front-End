@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { withRouter } from 'react-router-dom';
 import Validate from '../../services/validation';
-import useFetch from '../../hooks/useFetch';
 
 const EditMovie = (props) => {
     const [movie, setMovie] = useState({});

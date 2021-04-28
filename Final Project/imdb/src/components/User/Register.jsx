@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 import Validate from '../../services/validation';
 
 
@@ -21,15 +21,15 @@ class Register extends Component {
         this.setState({
             form: Object.assign(this.state.form, newObj)
         })
-        this.setState({err:[]})
+        this.setState({ err: [] })
     }
     handleSubmit(e) {
         e.preventDefault();
         console.log(this.state.form)
-        if (Validate.FormIsEmpty(this.state.form)) {
-            this.setState({ err: ['Fields cannot be empty!'] })
-            return
-        }
+        // if (Validate.FormIsEmpty(this.state.form)) {
+        //     this.setState({ err: ['Fields cannot be empty!'] })
+        //     return
+        // }
         if (Validate.EmailIsValid(this.state.form.email)) {
             this.setState({ err: ["You have entered an invalid email address!"] })
 
@@ -84,4 +84,4 @@ class Register extends Component {
         )
     }
 }
-export default Register;
+export default withRouter(Register);

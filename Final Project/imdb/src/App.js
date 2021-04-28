@@ -26,7 +26,9 @@ class App extends Component {
       userRole: '',
     }
   }
-
+  setUserRole(role) {
+    localStorage.setItem('blocked', role);
+  }
 
   render() {
     console.log(localStorage.getItem('token'));
@@ -43,7 +45,7 @@ class App extends Component {
           <ProtectedRoute path='/addMovie' component={AddMovies} />
           <ProtectedRoute path='/movies' component={Catalogue} isAuth={localStorage.getItem('token')} />
           <ProtectedRoute path='/deleteMovie/:movieid' component={DeleteMovie} isAuth={localStorage.getItem('token')} />
-          <ProtectedRoute path='/users' component={AdminPage} isAuth={localStorage.getItem('token')} />
+          <ProtectedRoute path='/users' component={AdminPage} isAuth={localStorage.getItem('token')} setUser={this.setUserRole} />
           <footer >
             <p>
               Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021
