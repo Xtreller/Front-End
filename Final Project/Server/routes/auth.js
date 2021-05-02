@@ -3,9 +3,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const userModel = require('../models/user');
 const reportModel = require('../models/reports');
-const config = require('../config/config')
+const config = require('../config/config');
 const verifyJwt = require('../middleware/auth-check');
-// const transporter = require('../middleware/email-sender');
+const transporter = require('../middleware/email-sender');
 
 const router = new express.Router()
 
@@ -41,17 +41,32 @@ router.post('/register', (req, res, next) => {
         })
       }
       if (!result) {
-        userModel.save(req.body);
-        res.json({
-          result: {
-            success: true,
-            message: 'You have successfuly registered!'
-          }
-        })
+        userModel.create(req.body)
+          .then(user => {
+            transporter.sendEmail(user.email, user._id);
+            res.json({
+              result: {
+                success: true,
+                message: 'You have successfuly registered!'
+              }
+            })
+          });
+
       }
     })
 })
+router.get('/confirm/:token', (req, res, next) => {
+  const token = req.params.token;
 
+  userModel.findOne({ _id: token })
+    .then(user => {
+      if (token === user._id) {
+        console.log('matching id')
+      }
+      userModel.updateOne({ _id: token }, { emailConfirmed: true })
+        .then(res.json({ success: true }))
+    })
+})
 router.get('/users', verifyJwt, (req, res, next) => {
 
   userModel.find({})
@@ -83,6 +98,15 @@ router.post('/login', (req, res, next) => {
                 }
               })
             }
+            if (!user.emailConfirmed) {
+              res.json({
+                result: {
+                  success: false,
+                  message: "Confirm Your email!"
+                }
+              })
+              return;
+            }
             const token = jwt.sign({ id: user._id }, config.jwtSecret);
             result = {
               success: true,
@@ -108,14 +132,10 @@ router.get('/block/:userid', (req, res, next) => {
     .then(user => {
       const { name, banned } = user
       console.log(name, banned);
-      if (banned) {
-        userModel.updateOne({ _id: req.params.userid }, { banned: false })
-          .then(returnUsers)
-      }
-      else {
-        userModel.updateOne({ _id: req.params.userid }, { banned: true })
-          .then(returnUsers)
-      }
+
+      userModel.updateOne({ _id: req.params.userid }, { banned: !user.banned })
+        .then(returnUsers)
+
     })
 })
 router.get('/makeAdmin/:userid', (req, res, next) => {
@@ -139,10 +159,10 @@ router.get('/makeAdmin/:userid', (req, res, next) => {
 router.post('/report', (req, res, next) => {
   var { email, message } = req.body;
   console.log('report')
-  reportModel.create({ email, content: message, date: Date.now()})
+  reportModel.create({ email, content: message, date: Date.now() })
     .then(() => {
-       reportModel.find({})
-       .then(reports=>{res.json(reports)})
+      reportModel.find({})
+        .then(reports => { res.json(reports) })
     })
 
 

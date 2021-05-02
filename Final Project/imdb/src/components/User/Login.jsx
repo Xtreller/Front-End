@@ -42,8 +42,6 @@ class Login extends Component {
             })
             .then(data => data.json())
             .then(response => {
-                console.log(response.message)
-                console.log('user', response.user.banned)
 
                 if (response.result.success && response.token) {
                     localStorage.setItem('token', response.token);

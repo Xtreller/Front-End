@@ -48,7 +48,7 @@ class Register extends Component {
                         this.props.history.push('/login')
                     }
                     else {
-                        this.setState({ err: res.result.message })
+                        this.setState({ err: [res.result.message] })
                     }
                 })
                 .catch(console.log)

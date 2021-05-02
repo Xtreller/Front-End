@@ -1,23 +1,27 @@
 const nodemailer = require('nodemailer');
 
-let testAccount = nodemailer.createTestAccount();
-
-const transporter = nodemailer.createTransport({
-    // host: "smtp.ethereal.email",
-    // port: 587,
-    // secure: false,
-    // auth: {
-    //     user: testAccount.user,
-    //     pass: testAccount.pass
-    // }
-});
-transporter.verify((error, success) => {
-    if (error) {
-        console.log(error);
+const sendEmail = (email, jwtString) => {
+    var transport = nodemailer.createTransport({
+        service: "Gmail",
+        auth: {
+            user: 'vladsito@gmail.com',
+            pass: "Ilchev160698."
+        }
+    })
+    var mailOptions = {
+        from: 'My-Imdb',
+        to: email,
+        subject: "Email confirmation!",
+        html: `Press <a href="http://localhost:3000/confirmation/${jwtString}">here </a>to verify your email!`
     }
-    else {
-        console.log("Server is ready to take our messages!");
-    }
-});
+    transport.sendMail(mailOptions, function (error, success) {
+        if (error) {
+            console.log(error)
+        }
+        else {
+            console.log('message sent!')
+        }
 
-module.exports = transporter;
+    })
+}
+module.exports = { sendEmail };
