@@ -23,7 +23,7 @@ class Details extends Component {
     }
     addComment(newComment) {
         const movieid = this.state.movie._id;
-
+        const comment = { user: localStorage.getItem('userEmail'), content: newComment }
         if (!newComment) {
             return { err: 'Comment cant be empty!' }
         }
@@ -35,7 +35,7 @@ class Details extends Component {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(newComment),
+                body: JSON.stringify(comment),
             })
                 .then(() => this.getMovie())
                 .catch(err => console.log(err));

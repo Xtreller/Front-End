@@ -8,7 +8,7 @@ const movieModel = new mongoose.Schema({
         enum: ['horror', 'romantic', 'thriller',
             'adventure', 'criminal', 'mystery',
             'fantasy', 'sports', 'action',
-            , 'comedy', 'action','animation','anime']
+            , 'comedy', 'action', 'animation', 'anime']
     }],
     carouselImages: [String],
     actors: { type: Array },
@@ -16,6 +16,6 @@ const movieModel = new mongoose.Schema({
     publishDate: Date,
     description: String,
     rating: { type: Number, min: 1, max: 10 },
-    comments: [String],
+    comments: [Object],
 });
 module.exports = new mongoose.model('Movie', movieModel);

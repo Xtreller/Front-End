@@ -1,7 +1,6 @@
 .details-container {
     margin: 0 auto;
     margin-bottom: 3rem;
-    /* background-color: #695c5c36; */
     background-image: linear-gradient(to top right, #ffffff66, #cc1616);
     opacity: 1;
     border-top: 1px solid rgb(255, 0, 0, 0.2);
@@ -21,10 +20,11 @@
 #front-cover {
     float: left;
     display: flex;
-    width: 300px;
-    position: absolute;
-    top: 27%;
+    width: auto;
+    top: 25%;
+    overflow: hidden;
     height: 400px;
+    position: relative;
 }
 
 .carousel {
@@ -35,7 +35,7 @@
     width: 70%;
     color: white;
     padding: 1rem;
-    padding-left: 2rem;
+    padding-left: 0.5rem;
     text-align: start;
     overflow: hidden;
     font-size: 30px;

@@ -4,6 +4,7 @@ import './style/forms.css';
 import './style/scroller.css';
 import Register from './components/User/Register';
 import Login from './components/User/Login';
+import Confirmation from './components/User/Confirmation';
 import AdminPage from './components/User/AdminPage';
 import Welcome from './components/Common/Welcome';
 import Contacts from './components/Common/Contacts';
@@ -41,6 +42,7 @@ class App extends Component {
           <Route path='/login' render={() => <Login history={this.props.history} auth={this.auth} />} />
           <Route path='/Contacts' component={Contacts} />
           <Route path='/Details/:movieid' component={Details} />
+          <Route path='/confirmation/:token' component={Confirmation} />
           <ProtectedRoute path='/editMovie/:movieid' component={FnEditMovie} />
           <ProtectedRoute path='/addMovie' component={AddMovies} />
           <ProtectedRoute path='/movies' component={Catalogue} isAuth={localStorage.getItem('token')} />
@@ -49,7 +51,7 @@ class App extends Component {
           <footer >
             <p>
               Developed By <Link to={'https://github.com/Xtreller'}> Xtrell </Link> © 2021
-          </p>
+            </p>
           </footer>
         </BrowserRouter>
       </div>

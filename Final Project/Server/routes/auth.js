@@ -61,12 +61,12 @@ router.get('/confirm/:token', (req, res, next) => {
   userModel.findOne({ _id: token })
     .then(user => {
       if (token === user._id) {
-        console.log('matching id')
+        userModel.updateOne({ _id: token }, { emailConfirmed: true })
+          .then(res.json({ success: true }))
       }
-      userModel.updateOne({ _id: token }, { emailConfirmed: true })
-        .then(res.json({ success: true }))
     })
 })
+
 router.get('/users', verifyJwt, (req, res, next) => {
 
   userModel.find({})

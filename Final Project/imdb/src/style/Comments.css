@@ -1,5 +1,5 @@
 .comment-container {
-    width: 65%;
+    width: 40%;
     margin: 0 auto;
     margin-bottom: 5rem;
     justify-content: center;
@@ -7,21 +7,34 @@
 }
 
 .comment-input {
-    width: 70%;
+    width: 60%;
     align-self: center;
-    float: auto;
+    justify-content: center;
 }
 
 .comment-li {
     color: white;
     text-decoration: none;
     list-style: none;
-    width: 100%;
+    width: auto;    
     text-align: start;
-    padding: 1rem;
+    padding: 0.5rem 0 0.3rem;
     background-color: rgba(255, 255, 255, 0.2);
     margin-bottom: 2px;
     border-radius: 5rem;
+}
+
+.comment-author {
+    color: #ffffff4b;
+    padding: 0;
+    margin: 0.2rem;
+    margin-left: 2rem;
+}
+
+.comment-content {
+    text-align: center;
+    padding: 1rem;
+    width: auto;
 }
 
 .comment-btn {
@@ -35,7 +48,7 @@
     background: #cc1616;
     border: 1px solid #cc1616;
     color: #fff;
-    float:auto;
+    float: auto;
 }
 
 .comment-btn:active {

@@ -88,7 +88,6 @@ router.get('/movies/:movieid', (req, res, next) => {
 })
 router.get('/movie/comments/:movieid', (req, res, next) => {
     const movieid = req.params.movieid;
-    console.log('getComments');
     movieModel.findById(movieid)
         .then(movie => res.status(200).json({ comments: movie.comments }))
         .catch(err => console.log(err));
@@ -101,19 +100,20 @@ router.post('/movie/delete/:movieid', (req, res, next) => {
 })
 router.post('/movie/addComment/:movieid', (req, res, next) => {
     const movieid = req.params.movieid;
-    const comment = req.body.slice(1, req.body.length - 1);
+    const comment = JSON.parse(req.body);
 
-    console.log('movie id: ', comment.toString())
+    console.log('movie id: ', comment.user)
     if (comment) {
         movieModel.updateOne(
-            { _id: movieid },
-            { $push: { comments: comment } },
-            (err, done) => {
-                if (err) {
-                    console.log(err);
-                }
-                done
+            { "_id": movieid  },
+            { $addToSet: { comments: comment } },
+            { upsert: true },
+                (err, done) => {
+            if(err) {
+                console.log(err);
             }
+                done
+        }
         )
             .then(res.redirect('/catalogue/movie/comments/' + movieid));
         // .then(console.log)

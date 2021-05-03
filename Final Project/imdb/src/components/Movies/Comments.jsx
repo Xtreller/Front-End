@@ -7,12 +7,13 @@ const FnComment = props => {
     const [err, setError] = useState('');
     const [comments, setComments] = useState(props.comments ? props.comments.reverse() : [])
     useEffect(() => {
-        console.log(localStorage.getItem('blocked'));
-        setComments(props.comments ? props.comments.reverse().slice(0, 7) : []);
+        setComments(props.comments ? props.comments.reverse() : []);
+        console.log(comments)
     }, [props.comments])
     const handleSubmit = e => {
 
         e.preventDefault();
+        console.log('click')
         if (!comment) {
             setError('Field cannot be empty!')
             return
@@ -24,7 +25,7 @@ const FnComment = props => {
     }
     return (
         <div className="comment-container">
-            {localStorage.getItem('blocked') ?
+            {!localStorage.getItem('blocked') ?
                 <div className='blocked'>
                     You can't comment because you have been blocked by the Admins of this site. For more information {<Link to={'/Contacts'}> Contact us</Link>}
                 </div> : <form onSubmit={e => handleSubmit(e)}>
@@ -34,7 +35,7 @@ const FnComment = props => {
                 </form>
             }
             <ul>
-                {comments ? comments.map((cmnt, idx) => <li className="comment-li" key={idx}>{cmnt}</li>) : "Be the first to comment!"}
+                {comments ? comments.map((cmnt, idx) => <li className="comment-li" key={idx}><h5 className="comment-author">{cmnt.user}</h5> <div className="comment-content">{cmnt.content}</div></li>) : "Be the first to comment!"}
                 <li>view all: {comments ? comments.length : 0}</li>
             </ul>
         </div>
